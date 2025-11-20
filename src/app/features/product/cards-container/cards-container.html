@@ -1,11 +1,12 @@
-@if (pagedData as p) { @for (product of p.items) {
-<app-card [product]="product"></app-card>
-}
-<div class="pagination">
-  <button (click)="GetProducts(p.currentPage - 1)" [disabled]="!p.hasPrevious">Indietro</button>
-  <span>Pagina {{ p.currentPage }} / {{ p.totalPages }}</span>
-  <button (click)="GetProducts(p.currentPage + 1)" [disabled]="!p.hasNext">Avanti</button>
-</div>
+@if (pagedData) {
+  @for (product of pagedData.items; track product.productId) {
+    <app-card [product]="product"></app-card>
+  }
+  <div class="pagination">
+    <button (click)="GetProducts(pagedData.currentPage - 1)" [disabled]="!pagedData.hasPrevious">Indietro</button>
+    <span>Pagina {{ pagedData.currentPage }} / {{ pagedData.totalPages }}</span>
+    <button (click)="GetProducts(pagedData.currentPage + 1)" [disabled]="!pagedData.hasNext">Avanti</button>
+  </div>
 } @else {
-<div>Caricamento...</div>
+  <div>Caricamento...</div>
 }
