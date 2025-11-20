@@ -21,7 +21,6 @@ export class CardsContainer {
   GetProducts(pageNumber: number = 1) {
     this.http.GetProductP(pageNumber).subscribe({
       next: (response) => {
-        // Trasforma gli items in istanze della classe ProductCard
         const items = response.items.map(
           (item: any) =>
             new ProductCard(
