@@ -1,1 +1,12 @@
-<p>cards-container works!</p>
+@if (pagedData) {
+  @for (product of pagedData.items; track product.productId) {
+    <app-card [product]="product"></app-card>
+  }
+  <div class="pagination">
+    <button (click)="GetProducts(pagedData.currentPage - 1)" [disabled]="!pagedData.hasPrevious">Indietro</button>
+    <span>Pagina {{ pagedData.currentPage }} / {{ pagedData.totalPages }}</span>
+    <button (click)="GetProducts(pagedData.currentPage + 1)" [disabled]="!pagedData.hasNext">Avanti</button>
+  </div>
+} @else {
+  <div>Caricamento...</div>
+}

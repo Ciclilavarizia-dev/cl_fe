@@ -1,1 +1,22 @@
 <p>card works!</p>
+<div class="card" (click)="onSelect()">
+  <h2>{{ product.name }}</h2>
+  <p>ID: {{ product.productId }}</p>
+  <p>Prezzo: {{ product.listPrice }}</p>
+  <p>Categoria: {{ product.categoryName }}</p>
+  <p>Colore: {{ product.color ?? '---' }}</p>
+  <p>Taglia: {{ product.size ?? '---' }}</p>
+  <p>Peso: {{ product.weight ?? '---' }}</p>
+  <p>Numero: {{ product.productNumber }}</p>
+  <p>Costo standard: {{ product.standardCost }}</p>
+  <div>
+    @if (product.thumbNailPhoto) {
+    <img
+      [src]="'data:image/gif;base64,' + product.thumbNailPhoto"
+      alt="{{ product.name }}"
+      width="64"
+      height="64"
+    />
+    }
+  </div>
+</div>
