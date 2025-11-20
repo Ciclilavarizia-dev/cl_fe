@@ -7,9 +7,9 @@ export class ProductCard {
     public listPrice: number,
     public productCategoryId: number,
     public categoryName: string,
-    public thumbNailPhoto: string,
-    public size: string | null,
-    public weight: number | null,
-    public productNumber: string
+    public thumbNailPhoto: string
+    // public size: string | null,
+    // public weight: number | null,
+    // public productNumber: string
   ) {}
 }

@@ -31,10 +31,10 @@ export class CardsContainer {
               item.listPrice,
               item.productCategoryId,
               item.categoryName,
-              item.thumbNailPhoto,
-              item.size,
-              item.weight,
-              item.productNumber
+              item.thumbNailPhoto
+              // item.size,
+              // item.weight,
+              // item.productNumber
             )
         );
         this.pagedData = new Page<ProductCard>(
