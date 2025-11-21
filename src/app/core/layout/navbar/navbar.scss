@@ -1,6 +1,6 @@
 div.nav-container {
   background-color: #8eb055;
-  padding: 10px 20px;
+  padding: 22px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,13 +28,19 @@ div.nav-container {
 
       button {
         position: absolute;
-        right: 0px;
+        right: 12px;
         top: 50%;
         transform: translateY(-50%);
         background: none;
         border: none;
         color: #7f8c8d;
         cursor: pointer;
+
+        i {
+          font-size: 24px;
+          font-style: bold;
+          color:#8eb055;
+        }
       }
     }
   }
@@ -42,5 +48,17 @@ div.nav-container {
   div.settings-navbar {
     display: flex;
     gap: 15px;
+    align-items: center;
+
+    div.cart{
+      i{
+        font-size: 24px;
+      }
+    }
+    div.user-profile{
+      i{
+        font-size: 24px;
+      }
+    }
   }
 }
