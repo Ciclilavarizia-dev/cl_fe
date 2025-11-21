@@ -8,7 +8,7 @@ div.main-categories-container {
     padding: 15px 20px;
     margin: 0;
     list-style: none;
-    background-color:#8eb055;
+    background-color:#1e1e1e;
     justify-content: center;
 
     li.nav-link {
@@ -22,7 +22,7 @@ div.main-categories-container {
 
         &.active,
         &:hover {
-          background-color: #537506;
+          background-color: #ff5700;
         }
       }
     }
