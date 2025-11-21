@@ -21,7 +21,7 @@ div.nav-container {
 
       input {
         width: 100%;
-        padding: 17px 12px;
+        padding: 17px 18px;
         border-radius: 24px;
         border: none;
 
@@ -45,12 +45,11 @@ div.nav-container {
         i {
           font-size: 24px;
           font-style: bold;
-          color: #8eb055;
+          color: #537506;
         }
       }
     }
   }
-
 
   div.settings-navbar {
     display: flex;
@@ -60,7 +59,7 @@ div.nav-container {
 
     div.cart {
       i.bi-cart-fill {
-        font-size: 24px;
+        font-size: 25px;
         position: relative;
 
         span.cart-count {
@@ -76,15 +75,60 @@ div.nav-container {
       }
     }
     div.user-profile {
+      position: relative;
+      cursor: pointer;
       p {
         margin-bottom: 0px;
         padding: 15px 39px;
         background-color: #537506;
         border-radius: 24px;
       }
-      i {
+      i.person-lg {
         display: none;
         color: #ffffff;
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: 55px;
+        text-align: center;
+        width: 200px;
+        right: 0;
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-width: 140px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        a {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: black;
+          padding: 10px 15px;
+          text-decoration: none;
+          font-size: 14px;
+          white-space: nowrap;
+
+          i {
+            display: block !important;
+            font-size: 25px;
+            background-color: #537506;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            color: white;
+          }
+
+          &:hover {
+            background-color: #537506;
+            color: white; // consigliato per contrasto
+          }
+        }
       }
     }
 
@@ -93,7 +137,7 @@ div.nav-container {
     }
   }
 }
-hr{ 
+hr {
   margin: 0;
   color: white;
 }
@@ -109,7 +153,7 @@ hr{
       width: 42%;
       form {
         input {
-          padding: 12px 10px;
+          padding: 12px 18px;
         }
       }
     }
@@ -124,12 +168,15 @@ hr{
         }
         i {
           display: block !important;
-          font-size: 24px;
+          font-size: 25px;
           background-color: #537506;
           border-radius: 50%;
           width: 40px;
           height: 40px;
           text-align: center;
+        }
+        div.user-dropdown {
+          top: 40px;
         }
       }
     }
@@ -145,7 +192,7 @@ hr{
       flex-direction: column;
       align-items: center;
       padding: 10px 0;
-      div.searchbar-mobile{
+      div.searchbar-mobile {
         display: none;
       }
 

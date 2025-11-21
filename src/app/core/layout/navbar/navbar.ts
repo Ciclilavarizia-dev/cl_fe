@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import {MainCategoriesBar} from './main-categories-bar/main-categories-bar';
+import { MainCategoriesBar } from './main-categories-bar/main-categories-bar';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -15,8 +15,10 @@ export class Navbar {
     { label: 'BIKES', path: '/bikes' },
     { label: 'COMPONENT', path: '/component' },
     { label: 'CLOTHING', path: '/clothing' },
-    { label: 'ACCESSORIES', path: '/accessories' }
+    { label: 'ACCESSORIES', path: '/accessories' },
   ];
+
+  showUserMenu = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -25,8 +27,11 @@ export class Navbar {
     }
   }
 
-    toggleMenu() {
+  toggleMenu() {
     this.showHamburgerMenu = !this.showHamburgerMenu;
   }
 
+  logout() {
+    console.log('Logout...');
+  }
 }

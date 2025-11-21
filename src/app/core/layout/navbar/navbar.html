@@ -17,15 +17,24 @@
           <span class="cart-count">0</span>
         </i>
       </div>
-      <div class="user-profile">
+      <div
+        class="user-profile"
+        (mouseenter)="showUserMenu = true"
+        (mouseleave)="showUserMenu = false"
+      >
         <p>Login</p>
-        <i class="bi bi-person-fill"></i>
+        <i class="bi bi-person-circle person-lg"></i>
+
+        <!-- Dropdown -->
+        <div class="user-dropdown" *ngIf="showUserMenu">
+          <a routerLink="/profilo"><i class="bi bi-person-fill"></i> Profilo</a>
+          <a (click)="logout()"> <i class="bi bi-box-arrow-right"></i>Logout</a>
+        </div>
       </div>
       <!-- Pulsante hamburger nel padre -->
       <button class="hamburger" (click)="toggleMenu()" [class.show]="showHamburgerMenu">☰</button>
     </div>
 
-    <!-- Tendina hamburger -->
     <div class="hamburger-window" *ngIf="showHamburgerMenu">
       <div class="searchbar-mobile">
         <form action="get">
