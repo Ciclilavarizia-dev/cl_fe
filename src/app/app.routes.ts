@@ -12,5 +12,5 @@ export const routes: Routes = [
   { path: 'login', component: Login, data: { hideNavbar: true } },
   { path: 'home', component: Home },
   { path: 'profile', component: Profile },
-  { path: 'reset-password', component: ResetPassword }
+  { path: 'reset-password', component: ResetPassword, data: { hideNavbar: true } }
 ];
