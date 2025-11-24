@@ -2,10 +2,20 @@
     <div class="login-card">
         <h2>Accedi</h2>
 
-        <input class="form-control" type="email" placeholder="Email" required #email/>
+        <div class="input-group-floating">
+            <input type="email" id="email" placeholder=" " required #email/>
+            <label for="email">Email address</label>
+        </div>
 
-        <div class="password-group">
-            <input class="form-control" [type]="showPassword ? 'text' : 'password'" placeholder="Password" required #password/>
+        <div class="input-group-floating password-group">
+            <input 
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                placeholder=" "
+                required 
+                #password
+            />
+            <label for="password">Password</label>
             <button type="button" class="toggle-btn" (click)="togglePasswordVisibility()">
                 <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
             </button>
