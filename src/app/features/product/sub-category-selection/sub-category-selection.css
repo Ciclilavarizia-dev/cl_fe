@@ -25,7 +25,7 @@
   text-align: left;
   transition: all 0.2s;
   
-  /* Evita che il testo vada a capo se troppo lungo, meglio troncarlo */
+ 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
