@@ -22,9 +22,9 @@
         </div>
 
         <a class="forgot-password" routerLink="/reset-password">Password dimenticato?</a>
-        <button (click)="loginBackend(email, password)" class="btn btn-primary rounded-pill">Conferma</button>
+        <button (click)="loginBackend(email, password)" class="confirm-btn">Conferma</button>
 
-        <p class="signup-text">Non hai ancora un account? <a href="#">Registrati.</a></p>
+        <p class="signup-text">Non hai ancora un account? <a routerLink="/register">Registrati.</a></p>
     </div>
 </div>
 
