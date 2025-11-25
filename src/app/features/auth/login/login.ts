@@ -47,7 +47,7 @@ export class Login {
               this.jwtTokenPayload = jwt_decode.jwtDecode(this.jwtToken);
               this.auth.SetJwtInfo(true, this.jwtToken);
               console.log('Decoded JWT payload:', this.jwtTokenPayload);
-              console.log('User ID from token:', this.jwtTokenPayload.userId);
+              console.log('Customer ID from token:', this.jwtTokenPayload.CustomerId);
               console.log('Email from token:', this.jwtTokenPayload.email);
               console.log('Role from token:', this.jwtTokenPayload.role);
               console.log('Expiration from token:', this.jwtTokenPayload.exp);
@@ -70,11 +70,8 @@ export class Login {
         },
         error: (err) => {
           if (err.status === 409 && err.error?.requiresPasswordUpdate) {
-            console.log('⚠️ CONFLICT triggered (via error block)');
-
             this.auth.userEmail = eml.value;
             localStorage.setItem('userEmail', eml.value);
-
             this.showResetPasswordModal = true;
             return;
           }
