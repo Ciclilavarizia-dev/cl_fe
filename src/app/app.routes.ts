@@ -5,6 +5,7 @@ import { Login } from './features/auth/login/login';
 import { Home } from './features/home/home';
 import { Profile } from './features/profile/profile';
 import { ResetPassword } from './features/auth/reset-password/reset-password';
+import { OrderDetailComponent } from './features/orders/order-detail/order-detail';
 
 export const routes: Routes = [
   { path: '', component: CardsContainer },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'login', component: Login, data: { hideNavbar: true } },
   { path: 'home', component: Home },
   { path: 'profile', component: Profile },
+  { path: "orders/:orderId", component: OrderDetailComponent },
   { path: 'reset-password', component: ResetPassword, data: { hideNavbar: true } }
 ];

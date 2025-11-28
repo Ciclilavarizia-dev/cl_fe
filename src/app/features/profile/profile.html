@@ -4,15 +4,33 @@
       <!-- Sidebar -->
       <div class="col-12 col-md-3 sidebar-box">
         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-info" type="button" role="tab">
+          <button
+            class="nav-link active"
+            data-bs-toggle="pill"
+            data-bs-target="#tab-info"
+            type="button"
+            role="tab"
+          >
             Informazioni Personali
           </button>
 
-          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-address" type="button" role="tab">
+          <button
+            class="nav-link"
+            data-bs-toggle="pill"
+            data-bs-target="#tab-address"
+            type="button"
+            role="tab"
+          >
             Indirizzi
           </button>
 
-          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-orders" type="button" role="tab">
+          <button
+            class="nav-link"
+            data-bs-toggle="pill"
+            data-bs-target="#tab-orders"
+            type="button"
+            role="tab"
+          >
             Ordini
           </button>
         </div>
@@ -60,12 +78,51 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let o of profile.orders">
+                <!-- <tr *ngFor="let o of profile.orders">
                   <td>{{ o.salesOrderNumber }}</td>
                   <td>{{ o.orderDate | date : 'dd/MM/yyyy' }}</td>
                   <td>{{ o.totalDue | currency : 'EUR' }}</td>
-                  <td>{{ o.status }}</td>
-                </tr>
+                  <td>{{ o.status }}</td> -->
+                <!-- <td>
+                    <a [routerLink]="['/orders', o.salesOrderId]">
+                      {{ o.salesOrderId }} Dettagli
+                    </a>
+                  </td> 
+                </tr> -->
+                <ng-container *ngFor="let o of profile.orders">
+                  <!-- Riga ordine -->
+                  <tr (click)="toggleOrder(o.salesOrderId)" style="cursor: pointer">
+                    <td>{{ o.salesOrderNumber }}</td>
+                    <td>{{ o.orderDate | date : 'dd/MM/yyyy' }}</td>
+                    <td>{{ o.totalDue | currency : 'EUR' }}</td>
+                    <td>{{ o.status }}</td>
+                  </tr>
+
+                  <!-- Riga dettaglio ordine espanso -->
+                  <tr *ngIf="expandedOrderId === o.salesOrderId">
+                    <td colspan="4">
+                      <div *ngIf="orderDetails[o.salesOrderId]; else loadingDetail">
+                        <p>
+                          <strong>Metodo spedizione:</strong>
+                          {{ orderDetails[o.salesOrderId].shipMethod }}
+                        </p>
+                        <p><strong>Totale:</strong> {{ orderDetails[o.salesOrderId].totalDue }}</p>
+
+                        <h5>Articoli:</h5>
+                        <ul>
+                          <li *ngFor="let item of orderDetails[o.salesOrderId].items">
+                            {{ item.productName }} - Qty: {{ item.orderQty }} - Totale:
+                            {{ item.lineTotal }}
+                          </li>
+                        </ul>
+                      </div>
+
+                      <ng-template #loadingDetail>
+                        <p>Caricamento dettagli...</p>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
 
