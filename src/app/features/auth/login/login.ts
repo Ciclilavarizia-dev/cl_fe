@@ -14,6 +14,7 @@ import { Auth } from '../../../shared/services/auth';
   styleUrl: './login.css',
 })
 export class Login {
+  
   showPassword = false;
 
   showResetPasswordModal = false;
