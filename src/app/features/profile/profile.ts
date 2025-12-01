@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { CustomerProfile } from '../../shared/models/CustomerProfile';
 import { AddressCustomer } from '../../shared/models/AddressCustomer';
 import { OrderCustomer } from '../../shared/models/OrderCustomer';
-import { RouterLink } from '@angular/router';
+//import { RouterLink } from '@angular/router';
 import { OrderDetail } from '../../shared/models/OrderDetail';
 import { OrderHttp } from '../../shared/services/order-http';
+import { Auth } from '../../shared/services/auth';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -23,7 +24,8 @@ export class Profile implements OnInit {
 
   constructor(
     private customerHttp: CustomerHttp,
-    private orderHttp: OrderHttp
+    private orderHttp: OrderHttp,
+    public auth: Auth
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class Profile implements OnInit {
         );
 
         const orders = dto.orders.map(o => 
-          new OrderCustomer(o.salesOrderId, o.salesOrderNumber, o.orderDate, o.totalDue, o.status)
+          new OrderCustomer(o.salesOrderId, o.salesOrderNumber, o.orderDate, o.totalDue, o.status, o.statusDescription)
         );
 
         this.profile = new CustomerProfile(
