@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { RegisterCredentials } from '../../../shared/models/RegisterCredentials';
 import { RegisterHttp } from '../../../shared/services/register-http';
-import { Auth } from '../../../shared/services/auth';
+import { AuthService } from '../../../shared/services/auth-service';
 import { HttpStatusCode } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 import { IJwtCustomPayload } from '../../../shared/models/IJwtCustomPayload';
@@ -25,7 +25,7 @@ export class Register {
     this.showPassword = !this.showPassword;
   }
 
-  constructor(private http: RegisterHttp, private auth: Auth, private router: Router) {}
+  constructor(private http: RegisterHttp, private auth: AuthService, private router: Router) {}
 
   registerBackend(
     name: HTMLInputElement, 

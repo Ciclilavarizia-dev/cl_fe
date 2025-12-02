@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResetPwdCredentials } from '../../../shared/models/ResetPwdCredentials';
 import { ResetPasswordHttp } from '../../../shared/services/reset-password-http';
-import { Auth } from '../../../shared/services/auth';
+import { AuthService } from '../../../shared/services/auth-service';
 import { HttpStatusCode } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -25,14 +25,12 @@ export class ResetPassword {
     this.showPassword = !this.showPassword;
   }
 
-  constructor(private http: ResetPasswordHttp, private auth: Auth, private router: Router) {}
+  constructor(private http: ResetPasswordHttp, private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
-    const savedEmail = this.auth.userEmail || localStorage.getItem('userEmail');
+    const savedEmail = localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
     if (savedEmail) {
-
       console.log("Email che verrà passato al login:", savedEmail);
-
       this.email = savedEmail;
     }
   }

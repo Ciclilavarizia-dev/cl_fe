@@ -23,7 +23,7 @@ export class AlertService {
 
   alertState$ = this.alertState.asObservable();
 
-  showPersistent(message: string, type: AlertType = 'info') {
+  showAlert(message: string, type: AlertType = 'info') {
     this.alertState.next({ message, visible: true, type });
   }
 

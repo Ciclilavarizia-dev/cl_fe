@@ -5,7 +5,7 @@ import { LoginHttp } from '../../../shared/services/login-http';
 import { HttpStatusCode } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 import { Router, RouterLink } from '@angular/router';
-import { Auth } from '../../../shared/services/auth';
+import { AuthService } from '../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -32,14 +32,14 @@ export class Login {
     this.router.navigate(['/reset-password']);
   }
 
-  constructor(private http: LoginHttp, private auth: Auth, private router: Router) {}
+  constructor(private httplogin: LoginHttp, private auth: AuthService, private router: Router) {}
 
   loginBackend(eml: HTMLInputElement, pwd: HTMLInputElement, remember?: HTMLInputElement) {
     if (eml.value != '' && pwd.value != '') {
       this.loginCredentials.email = eml.value;
       this.loginCredentials.password = pwd.value;
 
-      this.http.HttpPostLogin(this.loginCredentials).subscribe({
+      this.httplogin.HttpPostLogin(this.loginCredentials).subscribe({
         next: (response) => {
           switch (response.status) {
             case HttpStatusCode.Ok:
@@ -71,8 +71,7 @@ export class Login {
         },
         error: (err) => {
           if (err.status === 409 && err.error?.requiresPasswordUpdate) {
-            this.auth.userEmail = eml.value;
-            // localStorage.setItem('userEmail', eml.value);
+            localStorage.setItem('userEmail', eml.value);
             this.showResetPasswordModal = true;
             return;
           }
