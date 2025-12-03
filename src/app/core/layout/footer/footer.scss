@@ -1,0 +1,184 @@
+footer.footer-container {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 40px 20px;
+  margin-top: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  text-align: center;
+
+
+  /* ===============================
+      TOP AREA (logo + menu + social)
+  ================================== */
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+
+
+    /* LOGO */
+    .footer-logo-box {
+      width: 300px;
+      flex: 0 0 auto;
+
+      img {
+        width: 100%;
+      }
+    }
+
+
+    /* MENU CENTRALE */
+    .footer-menu {
+      flex: 1 1 300px;
+
+      ul.footer-submenu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 60px;
+        justify-content: space-evenly;
+
+        > li {
+          font-size: 17px;
+          font-weight: 600;
+          color: #ffffff;
+          
+
+          /* TITLE spacing */
+          margin-bottom: 8px;
+
+          /* SUBLISTS */
+          ul {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 0 0;
+
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            li a {
+              text-decoration: none;
+              color: #dddddd;
+              font-size: 14px;
+              font-weight: 400;
+              transition: 0.2s;
+
+              &:hover {
+                color: #ff5700;
+              }
+            }
+          }
+        }
+
+        /* VOCI SENZA SOTTO-LISTA */
+        > li > a {
+          color: white;
+          text-decoration: none;
+          font-size: 16px;
+
+          &:hover {
+            color: #ff5700;
+          }
+        }
+      }
+    }
+
+
+    /* SOCIAL ICONS */
+    .footer-social {
+      display: flex;
+      gap: 15px;
+      font-size: 26px;
+
+      i {
+        cursor: pointer;
+        color: #ffffff;
+        transition: 0.2s;
+
+        &:hover {
+          color: #ff5700;
+        }
+      }
+    }
+  }
+
+
+  /* LINEA */
+  hr {
+    margin: 0;
+    border-color: #444;
+  }
+
+
+  /* ===================
+        FOOTER BOTTOM
+  =================== */
+  .footer-bottom {
+    text-align: center;
+    font-size: 14px;
+    color: #bbbbbb;
+
+    a {
+      color: #ff5700;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+
+/* ===================
+   RESPONSIVE
+=================== */
+
+@media (max-width: 950px) {
+  footer.footer-container {
+    .footer-top {
+      justify-content: center;
+      text-align: center;
+
+      .footer-menu ul.footer-submenu {
+        justify-content: center;
+      }
+
+      .footer-social {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 600px) {
+  footer.footer-container {
+    .footer-top {
+      flex-direction: column;
+      align-items: center;
+
+      .footer-menu ul.footer-submenu {
+        flex-direction: column;
+        gap: 25px;
+
+        > li {
+          text-align: center;
+
+          ul {
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}
