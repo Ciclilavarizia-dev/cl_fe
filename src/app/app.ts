@@ -22,7 +22,29 @@ export class App implements OnDestroy {
   private progressInterval?: number;
   private hideTimeout?: number;
 
-  constructor(private router: Router) {
+    constructor(private router: Router) {
+
+    // Serve a nascondere il navbar in qualsiasi pagina che vogliamo
+    this.router.events
+      // .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      // .subscribe(() => {
+      //   const current = this.router.routerState.root.firstChild;
+      //   this.showNavbar = !current?.snapshot.data['hideNavbar'];
+      .pipe(filter((e): e is NavigationEnd | NavigationStart | NavigationCancel | NavigationError =>
+        e instanceof NavigationEnd || e instanceof NavigationStart || e instanceof NavigationCancel || e instanceof NavigationError))
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.startLoader();
+        } else {
+          this.finishLoader();
+        }
+
+        if (event instanceof NavigationEnd) {
+          const current = this.router.routerState.root.firstChild;
+          this.showNavbar = !current?.snapshot.data['hideNavbar'];
+        }
+
+      });
   }
 
   ngOnDestroy() {
