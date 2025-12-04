@@ -1,17 +1,18 @@
 <div class="container my-3 my-md-4">
-  <div class="row g-2 g-md-3 mb-3">
+  <div class="row g-2 g-md-3 mb-3 container-searchbar">
     
-    <div class="col-10 position-relative search-dropdown-container">
+    <div class="col-11 position-relative search-dropdown-container">
       <div class="input-group input-group-lg">
-        <span class="input-group-text bg-white border-end-0 border-brand">
+        <!-- <span class="input-group-text bg-white border-end-0 border-brand">
           <i class="bi bi-search text-brand"></i>
-        </span>
+        </span> -->
         <input
           type="text"
           class="form-control border-start-0 ps-0 border-brand"
-          placeholder="Cerca prodotti per nome o categoria..."
+          placeholder="    Cerca prodotti"
           [(ngModel)]="searchText"
           (ngModelChange)="onSearchBase()"
+          style="font-size: 17px;border-radius: 17px;"
         />
       </div>
 
@@ -44,7 +45,7 @@
       }
     </div>
 
-    <div class="col-2">
+    <div class="col-1">
       <button
         type="button"
         class="btn btn-brand btn-lg d-flex align-items-center justify-content-center gap-1 w-100 h-100 px-1"
