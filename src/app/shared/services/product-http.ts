@@ -40,18 +40,33 @@ export class ProductHttp {
     return this.http.get<ProductDetail>(`https://localhost:7000/api/Products/${id}`);
   }
 
-  SearchProduct(query: string, minPrice?: number, maxPrice?: number): Observable<Page<ProductCard>> {
+  SearchProduct(
+    query: string,
+    minPrice?: number,
+    maxPrice?: number
+  ): Observable<Page<ProductCard>> {
     let url = `https://localhost:7000/api/ProductSearch?query=${query}&pageNumber=1&pageSize=12`;
 
     if (minPrice !== undefined) {
-        url += `&minPrice=${minPrice}`;
+      url += `&minPrice=${minPrice}`;
     }
 
     if (maxPrice !== undefined) {
-        url += `&maxPrice=${maxPrice}`;
+      url += `&maxPrice=${maxPrice}`;
     }
 
     return this.http.get<Page<ProductCard>>(url);
-}
+  }
 
+  GetBestSellers(topN: number = 20): Observable<ProductCard[]> {
+    return this.http.get<ProductCard[]>(`${this.baseUrl}/bestsellers?topN=${topN}`);
+  }
+
+  GetNewArrivals(topN: number = 20): Observable<ProductCard[]> {
+    return this.http.get<ProductCard[]>(`${this.baseUrl}/newarrivals?topN=${topN}`);
+  }
+
+  GetFeaturedCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.baseUrl}/featured-categories`);
+  }
 }

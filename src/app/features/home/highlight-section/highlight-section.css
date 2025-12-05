@@ -1,0 +1,141 @@
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.carousel-controls button {
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.carousel-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carousel-controls button:not(:disabled):hover {
+  transform: scale(1.1);
+}
+
+/* CAROUSEL CONTAINER (prodotti) */
+.carousel-wrapper {
+  overflow: hidden;
+  padding: 0 2rem;
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+.carousel-inner {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.4s ease-in-out;
+}
+
+.carousel-item-custom {
+  flex: 0 0 auto;
+  width: calc(20% - 0.8rem); /* 5 card desktop */
+}
+
+/* RESPONSIVE CAROUSEL */
+@media (max-width: 1199px) {
+  .carousel-item-custom {
+    width: calc(25% - 0.75rem); /* 4 card */
+  }
+}
+
+@media (max-width: 991px) {
+  .carousel-item-custom {
+    width: calc(33.333% - 0.67rem); /* 3 card */
+  }
+}
+
+@media (max-width: 767px) {
+  .carousel-item-custom {
+    width: calc(50% - 0.5rem); /* 2 card */
+  }
+}
+
+@media (max-width: 575px) {
+  .carousel-item-custom {
+    width: 100%; /* 1 card mobile */
+  }
+  
+  .carousel-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+/* CATEGORY CARDS - GRID LAYOUT */
+.category-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+}
+
+.category-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.95;
+}
+
+.category-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.25rem 0;
+  line-height: 1.2;
+}
+
+.category-count {
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* RESPONSIVE CATEGORIES */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .category-card {
+    height: 130px;
+    padding: 1rem;
+  }
+  
+  .category-icon {
+    font-size: 2rem;
+  }
+  
+  .category-name {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .category-card {
+    height: 140px;
+  }
+}
