@@ -7,6 +7,7 @@ import { Profile } from './features/profile/profile';
 import { ResetPassword } from './features/auth/reset-password/reset-password';
 import { OrderDetailComponent } from './features/orders/order-detail/order-detail';
 import { Register } from './features/auth/register/register';
+import { Addresses } from './features/profile/addresses/addresses';
 
 export const routes: Routes = [
   { path: '', component: CardsContainer },
@@ -17,6 +18,21 @@ export const routes: Routes = [
   { path: 'home', component: Home },
   { path: 'profile', component: Profile },
   { path: "orders/:orderId", component: OrderDetailComponent },
-  { path: 'reset-password', component: ResetPassword, data: { hideNavbar: true } }
+
+  { 
+    path: 'profile', 
+    component: Profile,
+    children: [
+      {
+        path: 'addresses', // Questa ora corrisponde a /profile/addresses
+        loadComponent: () =>
+          import('./features/profile/addresses/addresses').then(m => m.Addresses)
+      },
+      // Qui potresti aggiungere altre rotte figlie del profilo
+      // { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // Ad esempio, reindirizzare a una dashboard di default
+    ]
+  }
+
+  //{ path: 'reset-password', component: ResetPassword, data: { hideNavbar: true } }
   
 ];
