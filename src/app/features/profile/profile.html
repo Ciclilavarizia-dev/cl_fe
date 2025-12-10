@@ -40,35 +40,88 @@
       <div class="col-12 col-md-9 main-content-box">
         <div class="tab-content">
           <!-- TAB 1: Info -->
-         
+
           <div class="tab-pane fade show active" id="tab-info" role="tabpanel">
-             @if (isLogged) { @if (userEmail) {
-          <div class="user-icon">
-            {{ userEmail[0] | uppercase }}
-          </div>
-          } }
+            @if (isLogged) { @if (userEmail) {
+            <div class="user-icon">
+              {{ userEmail[0] | uppercase }}
+            </div>
+            } }
             <h3 style="color: #ff5700; margin-bottom: 20px">Personal Details</h3>
 
             <p><strong>Name:</strong> {{ profile.firstName }} {{ profile.lastName }}</p>
             <p><strong>Email:</strong> {{ profile.emailAddress }}</p>
             <p><strong>Phone:</strong> {{ profile.phone }}</p>
+
+            <button class="btn btn-outline-primary mt-3" (click)="isEditingProfile = true">
+              Edit Profile
+            </button>
+          </div>
+
+          <!-- EDIT MODE ----------------------------------------------------->
+          <div *ngIf="isEditingProfile" class="card p-3 mt-3">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label">First Name</label>
+                <input type="text" [(ngModel)]="profile!.firstName" class="form-control mb-3" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Last Name</label>
+                <input type="text" [(ngModel)]="profile!.lastName" class="form-control mb-3" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" [(ngModel)]="profile!.emailAddress" class="form-control mb-3" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Phone</label>
+                <input type="text" [(ngModel)]="profile!.phone" class="form-control mb-3" />
+              </div>
+            </div>
+
+            <button class="btn btn-success me-2" (click)="saveProfile()">Save</button>
+
+            <button class="btn btn-secondary" (click)="resetProfile(); isEditingProfile = false">
+              Cancel
+            </button>
           </div>
 
           <!-- TAB 2: Indirizzi -->
           <div class="tab-pane fade" id="tab-address" role="tabpanel">
             <h3 style="color: #ff5700; margin-bottom: 20px">Addresses</h3>
 
-            <ul *ngIf="profile.addresses.length > 0; else noAddresses">
-              <li *ngFor="let a of profile.addresses">
-                <strong>{{ a.addressLine1 }}</strong
-                >, {{ a.city }} - {{ a.postalCode }}
-              </li>
-            </ul>
+              <!-- LISTA INDIRIZZI SEMPRE VISIBILE -->
+  <ul *ngIf="profile.addresses.length > 0; else noAddresses">
+    <li *ngFor="let a of profile.addresses">
+      <strong>{{ a.addressLine1 }}</strong>, {{ a.city }} - {{ a.postalCode }}
+    </li>
 
-            <ng-template #noAddresses>
-              <p>Nessun indirizzo registrato.</p>
-            </ng-template>
-          </div>
+    <!-- BOTTONI SEMPRE VISIBILI -->
+    <button class="btn btn-outline-primary mt-3" (click)="openAddressManager()">
+      Manage Addresses
+    </button>
+
+    <button class="btn btn-primary mt-3 ms-2" (click)="openAddressManager(true)">
+      + Add Address
+    </button>
+  </ul>
+
+  <!-- NO ADDRESSES -->
+  <ng-template #noAddresses>
+    <p>Nessun indirizzo registrato.</p>
+    <button class="btn btn-primary mt-2" (click)="openAddressManager(true)">
+      + Add Address
+    </button>
+  </ng-template>
+
+  <!-- ADDRESS MANAGER SOTTO LA LISTA -->
+  <div *ngIf="showAddressManager" class="mt-4">
+    <app-addresses [startWithCreate]="startWithCreate"></app-addresses>
+  </div>
+</div>
 
           <!-- TAB 3: Ordini -->
           <div class="tab-pane fade" id="tab-orders" role="tabpanel">

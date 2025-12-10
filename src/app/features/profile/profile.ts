@@ -4,14 +4,18 @@ import { CommonModule } from '@angular/common';
 import { CustomerProfile } from '../../shared/models/CustomerProfile';
 import { AddressCustomer } from '../../shared/models/AddressCustomer';
 import { OrderCustomer } from '../../shared/models/OrderCustomer';
-//import { RouterLink } from '@angular/router';
+// import { RouterLink } from '@angular/router';
 import { OrderDetail } from '../../shared/models/OrderDetail';
 import { OrderHttp } from '../../shared/services/order-http';
 import { AuthService } from '../../shared/services/auth-service';
+// import { RouterOutlet } from '@angular/router';
+import { CustomerUpdate } from '../../shared/models/CustomerUpdate';
+import { FormsModule } from '@angular/forms';
+import { Addresses } from './addresses/addresses';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, Addresses],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -23,7 +27,24 @@ export class Profile implements OnInit {
 
 
   profile: CustomerProfile | null = null;
+  originalProfileData: CustomerProfile | null = null;
+
   loading = true;
+
+ showAddressManager = false;
+startWithCreate = false;
+
+ openAddressManager(startWithCreate: boolean = false) {
+  this.startWithCreate = startWithCreate;
+  this.showAddressManager = true;
+
+  // Cambia tab
+  const tabBtn = document.querySelector('[data-bs-target="#tab-address"]') as HTMLElement;
+  tabBtn?.click();
+}
+
+    // Edit profilo toggle
+  isEditingProfile = false;
 
   expandedOrderId: number | null = null;
   orderDetails: { [key: number]: OrderDetail } = {};
@@ -71,6 +92,9 @@ export class Profile implements OnInit {
           orders
         );
 
+        // Copia originale (per Cancel)
+        this.originalProfileData = JSON.parse(JSON.stringify(this.profile));
+
         this.loading = false;
       },
       error: (err) => {
@@ -79,6 +103,44 @@ export class Profile implements OnInit {
       },
     });
   }
+
+    // ===========================================
+  // ANNULLA MODIFICHE PROFILO
+  // ===========================================
+  resetProfile() {
+    if (this.originalProfileData) {
+      this.profile = JSON.parse(JSON.stringify(this.originalProfileData));
+    }
+  }
+
+
+    // ===========================================
+  // SALVA MODIFICHE PROFILO
+  // ===========================================
+  saveProfile() {
+
+    if (!this.profile) return;
+
+    const data: CustomerUpdate = {
+      firstName: this.profile!.firstName,
+      lastName: this.profile!.lastName,
+      emailAddress: this.profile!.emailAddress,
+      phone: this.profile!.phone
+    };
+
+    this.customerHttp.updateMyProfile(data).subscribe({
+      next: () => {
+        alert("Profile updated!");
+
+        // aggiorno la copia originale
+        this.originalProfileData = JSON.parse(JSON.stringify(this.profile));
+
+        this.isEditingProfile = false;
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
 
   toggleOrder(orderId: number) {
     if (this.expandedOrderId === orderId) {
@@ -95,4 +157,5 @@ export class Profile implements OnInit {
       }
     }
   }
+
 }
