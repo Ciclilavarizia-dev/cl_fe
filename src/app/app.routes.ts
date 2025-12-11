@@ -10,7 +10,7 @@ import { Register } from './features/auth/register/register';
 import { Addresses } from './features/profile/addresses/addresses';
 
 export const routes: Routes = [
-  { path: '', component: CardsContainer },
+  { path: 'products', component: CardsContainer },
   { path: 'product/:id', component: Detail },
   { path: 'login', component: Login, data: { hideNavbar: true } },
   { path: 'reset-password', component: ResetPassword, data: { hideNavbar: true } },
