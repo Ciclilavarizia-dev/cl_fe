@@ -48,6 +48,13 @@ export class Login {
     private alertService: AlertService
   ) {}
 
+  ngOnInit() {
+    const savedEmail = localStorage.getItem('userEmail');
+    if (savedEmail) {
+      this.loginForm.patchValue({email:savedEmail})
+    }
+  }
+
   loginBackend(remember?: HTMLInputElement) {
     this.submitted = true;
     this.wrongCredentials = false;
@@ -114,7 +121,7 @@ export class Login {
           return;
         }
 
-        console.error('Login failed with status:', err.status);
+        // console.error('Login failed with status:', err.status);
       },
     });
   }
