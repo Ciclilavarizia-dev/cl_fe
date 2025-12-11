@@ -9,7 +9,14 @@
         <div class="input-group-floating"
           [class.invalid]="submitted && (loginForm.get('email')?.invalid || wrongCredentials)">
 
-          <input type="email" formControlName="email" id="email" placeholder=" " required #email />
+          <input 
+            type="email" 
+            formControlName="email" 
+            id="email" 
+            placeholder=" " 
+            required 
+            #email 
+          />
 
           <label for="email">Email address</label>
 
@@ -29,8 +36,14 @@
         <div class="input-group-floating password-group"
           [class.invalid]="submitted && (loginForm.get('password')?.invalid || wrongCredentials)">
 
-          <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" placeholder=" "
-            required #password />
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            formControlName="password" 
+            id="password" 
+            placeholder=" "
+            required 
+            #password 
+          />
 
           <label for="password">Password</label>
 
@@ -70,7 +83,7 @@
   <div class="modal-card">
     <p>You need to reset your password.</p>
 
-    <div class="button-group">
+    <div class="modal-button-group">
       <button class="btn btn-secondary" (click)="showResetPasswordModal = false">Cancel</button>
       <button class="btn btn-primary" (click)="goToResetPassword()">Reset password</button>
     </div>
