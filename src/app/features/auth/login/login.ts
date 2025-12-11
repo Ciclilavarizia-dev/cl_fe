@@ -55,9 +55,15 @@ export class Login {
     }
   }
 
+  clearErrors() {
+    if (this.submitted) {
+      this.submitted = false;
+    }
+  }
+
   loginBackend(remember?: HTMLInputElement) {
     this.submitted = true;
-    this.wrongCredentials = false;
+    // this.wrongCredentials = false;
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -65,9 +71,9 @@ export class Login {
     }
 
     const email = this.loginForm.value.email!;
-    const pwd = this.loginForm.value.password!;
+    const password = this.loginForm.value.password!;
 
-    this.httplogin.HttpPostLogin({ email, password: pwd }).subscribe({
+    this.httplogin.HttpPostLogin({ email, password }).subscribe({
       next: (response) => {
         switch (response.status) {
           case HttpStatusCode.Ok:
@@ -109,7 +115,6 @@ export class Login {
           this.wrongCredentials = true;
           this.loginForm.get('email')?.markAsTouched();
           this.loginForm.get('password')?.markAsTouched();
-          this.submitted = false;
           return;
         }
 
@@ -117,7 +122,6 @@ export class Login {
         if (err.status === 409 && err.error?.requiresPasswordUpdate) {
           localStorage.setItem('userEmail', email);
           this.showResetPasswordModal = true;
-          this.submitted = false;
           return;
         }
 
