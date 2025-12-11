@@ -77,6 +77,14 @@ export class ResetPassword {
     return !this.passwordMismatch;
   }
 
+  clearErrors() {
+    if (this.submitted) {
+      this.submitted = false;
+      this.passwordInvalid = false;
+      this.passwordMismatch = false;
+    }
+  }
+
   resetPasswordBackend() {
     this.submitted = true;
     this.checkPasswordRules();
@@ -100,12 +108,14 @@ export class ResetPassword {
             break;
 
           default:
+            this.submitted = false;
             console.error('Password reset failed with status:', response.status);
             break;
 
         }
       },
       error: (err) => {
+        this.submitted = false;
         console.error('Password reset failed with status:', err);
       },
     });
