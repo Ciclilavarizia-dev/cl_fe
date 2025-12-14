@@ -142,7 +142,7 @@ h2, a{
   text-align: center;
 }
 
-.button-group {
+.modal-button-group {
     display: flex;
     justify-content: space-evenly;
 }
@@ -157,7 +157,6 @@ inputs invalid, wrong creds, input box empty */
     top: 0 !important;
     color: #e63946 !important;
     font-size: 0.75rem !important;
-
 }
 
 .error-text {
