@@ -19,37 +19,33 @@ div.main-categories-container {
 
     li.nav-link {
       a {
-        // position: relative;
+        position: relative;
         text-decoration: none;
         font-weight: 700;
         font-size: 1rem;
+        color: white;
+        padding: 0.25rem 0;
+        transition: color 0.4s ease;
 
         .label {
-          --x: 50%;
-          --y: 50%;
-
-          display: inline-block;
-          color: white;
-
+          position: relative;
+          z-index: 2;
         }
 
-        &:hover .label {
-          color: transparent;
-
-          transition: color 0.50s ease;
-
-          background-image: radial-gradient(80px circle at var(--x) var(--y),
-              #ff5700 0%,
-              #ff5700 40%,
-              #ffffff 60%);
-
-          background-clip: text;
-          -webkit-background-clip: text;
-        }
-
-        &.active .label {
+        &:hover {
           color: #ff5700;
-          background: none;
+
+          &::after {
+            width: 100%;
+          }
+        }
+
+        &.active {
+          color: #ff5700;
+
+          &::after {
+            width: 100%;
+          }
         }
 
       }
