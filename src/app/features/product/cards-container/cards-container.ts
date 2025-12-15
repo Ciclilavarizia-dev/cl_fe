@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router'; // <--- Import aggiunto
 import { Page } from '../../../shared/models/Page';
 import { ProductCard } from '../../../shared/models/ProductCard';
-import { Category } from '../../../shared/models/Category ';
+import { Category } from '../../../shared/models/Category';
 import { Card } from './card/card';
 import { SubCategorySelection } from '../sub-category-selection/sub-category-selection';
 import { MainCategory } from '../../../shared/models/MainCategory';

@@ -36,3 +36,62 @@ div.container {
     }
   }
 }
+
+/* --- EDIT PROFILE STYLE (NEW) --- */
+
+.edit-card-box {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.edit-input-field {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+
+  &:focus {
+    outline: none;
+    border: 2px solid #6f8c3f;
+    box-shadow: 0 0 4px rgba(111, 140, 63, 0.4);
+  }
+}
+
+.edit-button-group {
+  margin-top: 10px;
+}
+
+.edit-btn-save {
+  background-color: #ff5700;
+  border: none;
+  padding: 10px 22px;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #ff5700;
+  }
+}
+
+.edit-btn-cancel {
+  background-color: #7f8c8d;
+  border: none;
+  padding: 10px 22px;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #6c7778;
+  }
+}

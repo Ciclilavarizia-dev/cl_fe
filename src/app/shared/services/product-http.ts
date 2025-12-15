@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { ProductDetail } from '../models/ProductDetail';
 import { ProductCard } from '../models/ProductCard';
 import { Page } from '../models/Page';
-import { Category } from '../models/Category ';
-import { MainCategory } from '../models/MainCategory';
+import { Category } from '../models/Category';
 
 @Injectable({
   providedIn: 'root',

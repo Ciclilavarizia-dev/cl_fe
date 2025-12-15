@@ -4,6 +4,7 @@ export class Category {
   constructor(
     public categoryId: number,
     public name: string,
-    public productCount: number
+    public productCount: number,
+    public imageUrl?: string
   ) {}
 }

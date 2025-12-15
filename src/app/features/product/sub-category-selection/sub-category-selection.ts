@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Category } from '../../../shared/models/Category ';
+import { Category } from '../../../shared/models/Category';
 
 @Component({
   selector: 'app-sub-category-selection',

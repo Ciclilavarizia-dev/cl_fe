@@ -9,7 +9,7 @@ import { Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './addresses.html',
-  styleUrl: './addresses.css',
+  styleUrl: './addresses.scss',
 })
 export class Addresses implements OnInit {
   addresses: any[] = [];
