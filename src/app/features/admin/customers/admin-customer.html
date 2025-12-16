@@ -1,1 +1,39 @@
-<p>admin-customer works!</p>
+<h2 class="customer-title">Lista Customer (Admin)</h2>
+
+<!-- Nessun customer -->
+<div *ngIf="customers.length === 0" class="no-customers-message">
+  Nessun customer trovato.
+</div>
+
+<!-- Lista clienti -->
+<ul *ngIf="customers.length > 0" class="customers-list">
+  <li *ngFor="let c of customers" class="customer-item">
+    <div class="customer-info">
+      <strong>ID:</strong> {{ c.customerId }},
+      <strong>Nome:</strong> {{ c.firstName }},
+      <strong>Cognome:</strong> {{ c.lastName }},
+      <strong>Email:</strong> {{ c.emailAddress }}
+    </div>
+  </li>
+</ul>
+
+<!-- PAGINAZIONE -->
+<div *ngIf="customers.length > 0" class="pagination">
+  <button
+    (click)="prevPage()"
+    [disabled]="!hasPrevious"
+  >
+    ◀ Precedente
+  </button>
+
+  <span class="page-info">
+    Pagina {{ page }} di {{ totalPages }}
+  </span>
+
+  <button
+    (click)="nextPage()"
+    [disabled]="!hasNext"
+  >
+    Successiva ▶
+  </button>
+</div>
