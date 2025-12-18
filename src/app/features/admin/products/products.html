@@ -11,6 +11,7 @@
         <th class="sort-by" (click)="changeSort('price')">List Price</th>
         <th class="sort-by" (click)="changeSort('category')">Category</th>
         <th class="sort-by" (click)="changeSort('parentcategory')">Parent Category</th>
+        <th>Modified date</th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,19 @@
         <td>{{ p.listPrice | currency }}</td>
         <td>{{ p.categoryName }}</td>
         <td>{{ p.parentCategoryName }}</td>
+        <td>{{ p.modifiedDate | date:'yyyy-MM-dd HH:mm' }}</td>
+
+        <td class="text-end position-relative">
+          <button type="button" (click)="toggleActions(p.productId, $event)" aria-label="Open actions" title="actions"
+            class="kebab-btn">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+
+          <div class="row-popover" *ngIf="activeProductId === p.productId">
+            <button type="button" class="action-item" (click)="goToEdit(p.productId, $event)">Show/Edit details</button>
+            <button type="button" class="action-item danger">Remove</button>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -47,4 +61,3 @@
     </button>
   </div>
 </div>
-

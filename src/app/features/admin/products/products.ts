@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ProductList } from '../../../shared/models/ProductList';
 import { AdminProductHttp } from '../../../shared/services/admin/admin-product-http';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
@@ -23,10 +25,26 @@ export class Products {
 
   isLoading = true;
 
-  constructor(private productService: AdminProductHttp) {}
+  activeProductId: number | null = null;
+
+  constructor(private productService: AdminProductHttp, private router: Router) { }
+
+  goToEdit(productId: number, event: MouseEvent) {
+    event.stopPropagation();
+    this.activeProductId = null;
+    console.log('navigate to product n°', productId);
+    this.router.navigate(['/admin/products/edit', productId]);
+  }
 
   ngOnInit(): void {
     this.loadProducts();
+
+    // close popover when clicking anywhere else
+    document.addEventListener('click', this.onDocumentClick);
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.onDocumentClick);
   }
 
   loadProducts() {
@@ -72,6 +90,16 @@ export class Products {
 
   get totalPages(): number {
     return Math.ceil(this.totalCount / this.pageSize)
+  }
+
+  toggleActions(productId: number, event: MouseEvent) {
+    event.stopPropagation();
+    this.activeProductId = this.activeProductId === productId ? null : productId;
+  }
+
+  @HostListener('document:click')
+  onDocumentClick() {
+    this.activeProductId = null;
   }
 
 }
