@@ -51,6 +51,9 @@
                 <div class="col">
                     <label>List Price</label>
                     <input type="number" class="form-control" formControlName="listPrice" step="0.01">
+                    <div class="text-danger mt-1" *ngIf="form.errors?.['priceMismatch']">
+                        List price cannot be lower than standard cost.
+                    </div>
                 </div>
 
                 <div class="col">
@@ -93,11 +96,17 @@
                 <div class="col">
                     <label>Sell End Date</label>
                     <input type="date" class="form-control" formControlName="sellEndDate" />
+                    <div class="text-danger mt-1" *ngIf="form.errors?.['sellEndBeforeStart']">
+                        Sell end date cannot be before sell start date.
+                    </div>
                 </div>
 
                 <div class="col">
                     <label>Discontinued Date</label>
                     <input type="date" class="form-control" formControlName="discontinuedDate" />
+                    <div class="text-danger mt-1" *ngIf="form.errors?.['discontinuedBeforeStart']">
+                        Discontinued date cannot be before sell start date.
+                    </div>
                 </div>
             </div>
         </section>

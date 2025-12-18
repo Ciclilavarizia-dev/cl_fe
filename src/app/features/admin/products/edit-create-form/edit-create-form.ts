@@ -1,12 +1,26 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { 
+  FormBuilder, 
+  FormGroup, 
+  Validators, 
+  ɵInternalFormsSharedModule, 
+  ReactiveFormsModule, 
+  ValidatorFn, 
+  AbstractControl, 
+  ValidationErrors 
+} from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-create-form',
   standalone: true,
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [
+    ɵInternalFormsSharedModule, 
+    ReactiveFormsModule, 
+    CommonModule, 
+    RouterModule
+  ],
   templateUrl: './edit-create-form.html',
   styleUrl: './edit-create-form.css',
 })
@@ -40,35 +54,63 @@ export class EditCreateForm {
 
     // edit mode
     if (data.product) {
-      this.isEditMode = true;
-      this.hasOrders = data.product.hasOrders;
+      this.enterEditMode(data.product);
+    }
+  }
 
-      this.form.patchValue({
-        name: data.product.name,
-        productNumber: data.product.productNumber,
-        categoryId: data.product.categoryId,
-        productModelId: data.product.productModelId,
+  submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-        listPrice: data.product.listPrice,
-        standardCost: data.product.standardCost,
+    const payload = {
+      ...this.form.getRawValue(),
+      parentCategoryId: this.productCategoryId
+    };
 
-        color: data.product.color,
-        size: data.product.size,
-        weight: data.product.weight,
+    if (this.isEditMode) {
 
-        sellStartDate: data.product.sellStartDate,
-        sellEndDate: data.product.sellEndDate,
-        discontinuedDate: data.product.discontinuedDate
-      });
+    } else {
 
-      if (this.hasOrders) {
-        this.form.get('productNumber')?.disable();
-      }
+    }
+  }
+
+  private enterEditMode(product: any) {
+    this.isEditMode = true;
+    this.hasOrders = product.hasOrders;
+
+    this.form.patchValue({
+
+      // General
+      name: product.name,
+      productNumber: product.productNumber,
+      categoryId: product.categoryId,
+      productModelId: product.productModelId,
+
+      // Pricing
+      listPrice: product.listPrice,
+      standardCost: product.standardCost,
+
+      // Attributes
+      color: product.color,
+      size: product.size,
+      weight: product.weight,
+
+      // Availability
+      sellStartDate: this.toDateInput(product.sellStartDate),
+      sellEndDate: this.toDateInput(product.sellEndDate),
+      discontinuedDate: this.toDateInput(product.discontinuedDate)
+    });
+
+    if (this.hasOrders) {
+      this.form.get('productNumber')?.disable();
     }
   }
 
   private buildForm() {
-    this.form = this.fb.group({
+    this.form = this.fb.group(
+      {
 
       // General
       name: ['', Validators.required],
@@ -89,22 +131,15 @@ export class EditCreateForm {
       sellStartDate: [null, Validators.required],
       sellEndDate: [null],
       discontinuedDate: [null],
-    });
-  }
 
-  submit() {
-    if (this.form.invalid) return;
-
-    const payload = {
-      ...this.form.getRawValue(),
-      parentCategoryId: this.productCategoryId
-    };
-
-    if (this.isEditMode) {
-
-    } else {
-
-    }
+      },
+      {
+        validators: [
+          priceConsistencyValidator,
+          dateConsistencyValidator
+        ]
+      }
+    );
   }
 
   private setupCategoryAutoSync() {
@@ -117,4 +152,41 @@ export class EditCreateForm {
     })
   }
 
+  private toDateInput(date: string | null): string | null {
+    if (!date) return null;
+    return date.split('T')[0];
+  }
+
 }
+
+// Custom validators
+export const priceConsistencyValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const listPrice = control.get('listPrice')?.value;
+  const standardCost = control.get('standardCost')?.value;
+
+  if (listPrice != null && standardCost != null && listPrice < standardCost) {
+    return { priceMismatch: true };
+  }
+
+  return null;
+};
+
+export const dateConsistencyValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const start = control.get('sellStartDate')?.value;
+  const end = control.get('sellEndDate')?.value;
+  const discontinued = control.get('discontinuedDate')?.value;
+
+  if (start && end && end < start) {
+    return { sellEndBeforeStart: true };
+  }
+
+  if (start && discontinued && discontinued < start) {
+    return { discontinuedBeforeStart: true };
+  }
+
+  return null;
+};
