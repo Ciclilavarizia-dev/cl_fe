@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductList } from '../../models/ProductList';
+import { AdminProductEdit } from '../../models/AdminProductEdit';
+import { AdminCategory } from '../../models/AdminCategory';
+import { AdminProductModel } from '../../models/AdminProductModel';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +27,17 @@ export class AdminProductHttp {
         sortDirection: sortDirection ?? 'asc'
       }
     });
+  }
+
+  getProduct(id: number): Observable<AdminProductEdit> {
+    return this.http.get<AdminProductEdit>(`${this.apiUrl}/${id}`);
+  }
+
+  getCategories() {
+    return this.http.get<AdminCategory[]>(`${this.apiUrl}/categories`);
+  }
+
+  getModels() {
+    return this.http.get<AdminProductModel[]>(`${this.apiUrl}/models`)
   }
 }
