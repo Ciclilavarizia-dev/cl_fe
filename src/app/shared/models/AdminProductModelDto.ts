@@ -1,4 +1,4 @@
-export interface AdminProductModel {
+export interface AdminProductModelDto {
   productModelId: number;
   name: string;
 }

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AdminProductEdit } from '../../models/AdminProductEdit';
-import { AdminCategory } from '../../models/AdminCategory';
-import { AdminProductModel } from '../../models/AdminProductModel';
+import { AdminProductEditDto } from '../../models/AdminProductEditDto';
+import { AdminCategoryDto } from '../../models/AdminCategoryDto';
+import { AdminProductModelDto } from '../../models/AdminProductModelDto';
+import { AdminProductUpdateDto } from '../../models/AdminProductUpdateDto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,15 +30,20 @@ export class AdminProductHttp {
     });
   }
 
-  getProduct(id: number): Observable<AdminProductEdit> {
-    return this.http.get<AdminProductEdit>(`${this.apiUrl}/${id}`);
+  getProduct(id: number): Observable<AdminProductEditDto> {
+    return this.http.get<AdminProductEditDto>(`${this.apiUrl}/${id}`);
   }
 
   getCategories() {
-    return this.http.get<AdminCategory[]>(`${this.apiUrl}/categories`);
+    return this.http.get<AdminCategoryDto[]>(`${this.apiUrl}/categories`);
   }
 
   getModels() {
-    return this.http.get<AdminProductModel[]>(`${this.apiUrl}/models`)
+    return this.http.get<AdminProductModelDto[]>(`${this.apiUrl}/models`)
+  }
+
+  // Update call
+  updateProduct(dto: AdminProductUpdateDto) {
+    return this.http.put(`${this.apiUrl}/${dto.productId}`, dto);
   }
 }

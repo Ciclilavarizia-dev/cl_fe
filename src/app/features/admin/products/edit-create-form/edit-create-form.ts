@@ -1,31 +1,30 @@
 import { Component } from '@angular/core';
-import { 
-  FormBuilder, 
-  FormGroup, 
-  Validators, 
-  ɵInternalFormsSharedModule, 
-  ReactiveFormsModule, 
-  ValidatorFn, 
-  AbstractControl, 
-  ValidationErrors 
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ɵInternalFormsSharedModule,
+  ReactiveFormsModule,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AdminProductUpdateDto } from '../../../../shared/models/AdminProductUpdateDto';
+import { AdminProductEditDto } from '../../../../shared/models/AdminProductEditDto';
+import { AlertService } from '../../../../shared/services/alert-service';
+import { AdminProductHttp } from '../../../../shared/services/admin/admin-product-http';
 
 @Component({
   selector: 'app-edit-create-form',
   standalone: true,
-  imports: [
-    ɵInternalFormsSharedModule, 
-    ReactiveFormsModule, 
-    CommonModule, 
-    RouterModule
-  ],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './edit-create-form.html',
   styleUrl: './edit-create-form.css',
 })
 export class EditCreateForm {
-
+  // Variables
   form!: FormGroup;
 
   isEditMode = false;
@@ -38,11 +37,25 @@ export class EditCreateForm {
 
   isSubmitting = false;
 
+  private originalProduct!: AdminProductFormSnapshot;
+
+  confirmationChanges: ChangeItem[] = [];
+  pendingUpdate!: AdminProductUpdateDto;
+
+  isConfirmModalOpen = false;
+
+  private currentProductId: number | null = null;
+
+  // Constructor
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-  ) { }
+    private alertService: AlertService,
+    private adminProductHttp: AdminProductHttp,
+    private router: Router,
+  ) {}
 
+  // functions
   ngOnInit(): void {
     this.buildForm();
 
@@ -60,103 +73,167 @@ export class EditCreateForm {
     }
   }
 
-  submit() {
-
-    // Prevent double submitting
-    if (this.isSubmitting) return;
-
-    // Gaurd: block invalid form (includes custom validators)
+  onUpdateClick() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    const payload = {
-      ...this.form.getRawValue(),
-      parentCategoryId: this.productCategoryId
-    };
+    const updatedSnapshot = this.getFormSnapshot();
+    const changes = this.computeChanges(this.originalProduct, updatedSnapshot);
 
-    if (this.isEditMode) {
-
-    } else {
-
+    if (changes.length === 0) {
+      this.alertService.showAlert('No changes detected');
+      return;
     }
+
+    const dto = this.buildUpdateDtoFromSnapshot(updatedSnapshot);
+    this.openConfirmationModal(changes, dto);
   }
 
-  private enterEditMode(product: any) {
+  openConfirmationModal(changes: ChangeItem[], dto: AdminProductUpdateDto) {
+    this.confirmationChanges = changes;
+    this.pendingUpdate = dto;
+    this.isConfirmModalOpen = true;
+  }
+
+  confirmUpdate() {
+    this.adminProductHttp.updateProduct(this.pendingUpdate).subscribe({
+      next: () => {
+        this.isConfirmModalOpen = false;
+        this.router.navigate(['/admin/products']);
+        this.alertService.showAlert('Successfully Updated', 'success');
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  //-----------------
+  // Private methods:
+  //-----------------
+
+  private buildForm() {
+    this.form = this.fb.group(
+      {
+        // General
+        productCategoryId: [null, Validators.required],
+        productModelId: [null],
+        productNumber: ['', Validators.required],
+        name: ['', Validators.required],
+
+        // Pricing
+        listPrice: [0, [Validators.required, Validators.min(0)]],
+        standardCost: [0, [Validators.required, Validators.min(0)]],
+
+        // Attributes
+        color: [''],
+        size: [''],
+        weight: [null, Validators.min(0)],
+
+        // Availability
+        sellStartDate: [null, Validators.required],
+        sellEndDate: [null],
+        discontinuedDate: [null],
+      },
+      {
+        validators: [priceConsistencyValidator, dateConsistencyValidator],
+      }
+    );
+  }
+
+  // private functions
+  private enterEditMode(product: AdminProductEditDto & any) {
     this.isEditMode = true;
     this.hasOrders = product.hasOrders;
+    this.currentProductId = product.productId; // IMPORTANT
 
-    this.form.patchValue({
+    const snapshot = this.mapEditDtoToSnapshot(product);
 
-      // General
-      name: product.name,
-      productNumber: product.productNumber,
-      categoryId: product.categoryId,
-      productModelId: product.productModelId,
+    this.originalProduct = structuredClone(snapshot);
 
-      // Pricing
-      listPrice: product.listPrice,
-      standardCost: product.standardCost,
-
-      // Attributes
-      color: product.color,
-      size: product.size,
-      weight: product.weight,
-
-      // Availability
-      sellStartDate: this.toDateInput(product.sellStartDate),
-      sellEndDate: this.toDateInput(product.sellEndDate),
-      discontinuedDate: this.toDateInput(product.discontinuedDate)
-    });
+    this.form.patchValue(snapshot);
 
     if (this.hasOrders) {
       this.form.get('productNumber')?.disable();
     }
   }
 
-  private buildForm() {
-    this.form = this.fb.group(
-      {
+  private mapEditDtoToSnapshot(product: AdminProductEditDto & any): AdminProductFormSnapshot {
+    return {
+      productCategoryId: product.productCategoryId,
+      productModelId: product.productModelId,
+      productNumber: product.productNumber,
+      name: product.name,
 
-      // General
-      name: ['', Validators.required],
-      productNumber: ['', Validators.required],
-      categoryId: [null, Validators.required],
-      productModelId: [null],
+      listPrice: product.listPrice,
+      standardCost: product.standardCost,
 
-      // Pricing
-      listPrice: [0, [Validators.required, Validators.min(0)]],
-      standardCost: [0, [Validators.required, Validators.min(0)]],
+      color: product.color,
+      size: product.size,
+      weight: product.weight,
 
-      // Attributes
-      color: [''],
-      size: [''],
-      weight: [null, Validators.min(0)],
+      sellStartDate: this.toDateInput(product.sellStartDate),
+      sellEndDate: this.toDateInput(product.sellEndDate),
+      discontinuedDate: this.toDateInput(product.discontinuedDate),
+    };
+  }
 
-      // Availability
-      sellStartDate: [null, Validators.required],
-      sellEndDate: [null],
-      discontinuedDate: [null],
+  private getFormSnapshot(): AdminProductFormSnapshot {
+    const raw = this.form.getRawValue();
 
-      },
-      {
-        validators: [
-          priceConsistencyValidator,
-          dateConsistencyValidator
-        ]
-      }
-    );
+    return {
+      productCategoryId: raw.productCategoryId,
+      productModelId: raw.productModelId,
+      productNumber: raw.productNumber,
+      name: raw.name,
+
+      listPrice: raw.listPrice,
+      standardCost: raw.standardCost,
+
+      color: raw.color,
+      size: raw.size,
+      weight: raw.weight,
+
+      sellStartDate: raw.sellStartDate,
+      sellEndDate: raw.sellEndDate,
+      discontinuedDate: raw.discontinuedDate,
+    };
+  }
+
+  private buildUpdateDtoFromSnapshot(s: AdminProductFormSnapshot): AdminProductUpdateDto {
+    if (this.currentProductId == null) {
+      throw new Error('Missing productId (not in edit mode?)');
+    }
+
+    return {
+      productId: this.currentProductId,
+
+      productCategoryId: s.productCategoryId!, // if required by backend
+      productModelId: s.productModelId!, // if required by backend
+      name: s.name,
+      productNumber: s.productNumber,
+
+      standardCost: s.standardCost,
+      listPrice: s.listPrice,
+
+      color: s.color || undefined,
+      size: s.size || undefined,
+      weight: s.weight ?? undefined,
+
+      sellStartDate: s.sellStartDate!, // required by validator
+      sellEndDate: s.sellEndDate || undefined,
+      discontinuedDate: s.discontinuedDate || undefined,
+    };
   }
 
   private setupCategoryAutoSync() {
-    this.form.get('categoryId')?.valueChanges.subscribe(categoryId => {
-      const category = this.categories.find(
-        c => c.productCategoryId === categoryId
-      );
+    this.form.get('productCategoryId')?.valueChanges.subscribe((productCategoryId) => {
+      const category = this.categories.find((c) => c.productCategoryId === productCategoryId);
 
       this.productCategoryId = category?.parentProductCategoryId ?? null;
-    })
+    });
   }
 
   private toDateInput(date: string | null): string | null {
@@ -164,6 +241,40 @@ export class EditCreateForm {
     return date.split('T')[0];
   }
 
+  private computeChanges(
+    original: AdminProductFormSnapshot,
+    updated: AdminProductFormSnapshot
+  ): ChangeItem[] {
+    const changes: ChangeItem[] = [];
+
+    const addIfChanged = (key: keyof AdminProductFormSnapshot, label: string) => {
+      const before = original[key];
+      const after = updated[key];
+
+      if (before !== after) {
+        changes.push({
+          label,
+          before: String(before ?? '—'),
+          after: String(after ?? '—'),
+        });
+      }
+    };
+
+    addIfChanged('name', 'Name');
+    addIfChanged('productNumber', 'Product number');
+    addIfChanged('productCategoryId', 'Category');
+    addIfChanged('productModelId', 'Model');
+    addIfChanged('standardCost', 'Standard cost');
+    addIfChanged('listPrice', 'List price');
+    addIfChanged('color', 'Color');
+    addIfChanged('size', 'Size');
+    addIfChanged('weight', 'Weight');
+    addIfChanged('sellStartDate', 'Sell start date');
+    addIfChanged('sellEndDate', 'Sell end date');
+    addIfChanged('discontinuedDate', 'Discontinued date');
+
+    return changes;
+  }
 }
 
 // Custom validators
@@ -197,3 +308,13 @@ export const dateConsistencyValidator: ValidatorFn = (
 
   return null;
 };
+
+//----------------------
+// CHANGE DIFF GENERATOR
+//----------------------
+
+interface ChangeItem {
+  label: string;
+  before: string;
+  after: string;
+}
