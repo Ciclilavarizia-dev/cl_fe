@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -20,10 +20,10 @@ import { AdminProductHttp } from '../../../../shared/services/admin/admin-produc
   selector: 'app-edit-form',
   standalone: true,
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, CommonModule, RouterModule],
-  templateUrl: './edit-form.html',
-  styleUrl: './edit-form.css',
+  templateUrl: './edit-form-v2.html',
+  styleUrl: './edit-form-v2.css',
 })
-export class EditCreateForm {
+export class EditForm {
   // Variables
   form!: FormGroup;
 
@@ -53,9 +53,33 @@ export class EditCreateForm {
     private alertService: AlertService,
     private adminProductHttp: AdminProductHttp,
     private router: Router,
-  ) {}
+  ) { }
 
-  // functions
+  scrollTo(id: string) {
+    const container = document.querySelector('.section-scrollspy') as HTMLElement;
+    const target = container?.querySelector('#' + id) as HTMLElement;
+
+    if (!container || !target) return;
+
+    const containerTop = container.getBoundingClientRect().top;
+    const targetTop = target.getBoundingClientRect().top;
+
+    const offset =
+      targetTop - containerTop +
+      container.scrollTop -
+      container.clientHeight / 2 +
+      target.clientHeight / 2;
+
+    container.scrollTo({
+      top: offset,
+      behavior: 'smooth'
+    });
+  }
+
+  //-----------
+  // functions:
+  //-----------
+
   ngOnInit(): void {
     this.buildForm();
 
@@ -143,7 +167,6 @@ export class EditCreateForm {
     );
   }
 
-  // private functions
   private enterEditMode(product: AdminProductEditDto & any) {
     this.isEditMode = true;
     this.hasOrders = product.hasOrders;
@@ -241,7 +264,7 @@ export class EditCreateForm {
     return date.split('T')[0];
   }
 
-  // Helper function:
+  // Helper functions:
   /**
    * to make the update preview from 5 -> 6
    * to Mountain Bikes -> Road Bikes
@@ -329,10 +352,6 @@ export const dateConsistencyValidator: ValidatorFn = (
 
   return null;
 };
-
-//----------------------
-// CHANGE DIFF GENERATOR
-//----------------------
 
 interface ChangeItem {
   label: string;
