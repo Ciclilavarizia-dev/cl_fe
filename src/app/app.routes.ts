@@ -11,6 +11,10 @@ import { NotFound } from './pages/not-found/not-found';
 import { Cart } from './pages/cart/cart';
 import { AdminCustomer } from './features/admin/customers/admin-customer';
 import { AdminOrder } from './features/admin/orders/admin-order';
+import { Products } from './features/admin/products/products';
+import { EditForm } from './features/admin/products/edit-form/edit-form';
+import { ProductFormResolver } from './shared/services/admin/product-form-resolver';
+import { CreateForm } from './features/admin/products/create-form/create-form';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,8 +30,14 @@ export const routes: Routes = [
   { path: 'orders/:orderId', component: OrderDetailComponent },
   { path: 'products/:mainCategory', component: CardsContainer },
   { path: 'cart', component: Cart },
-  {
-    path: 'profile',
+
+  // Admin routes:
+  { path: 'admin/products', component: Products },
+  { path: 'admin/products/edit/:id', component: EditForm, resolve: { data: ProductFormResolver} },
+  { path: 'admin/products/create', component: CreateForm, resolve: { data: ProductFormResolver} },
+
+  { 
+    path: 'profile', 
     component: Profile,
     children: [
       {
