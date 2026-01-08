@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminProductListDto } from '../../../shared/models/admin/product/AdminProductListDto';
 import { AdminProductDetailDto } from '../../../shared/models/admin/product/AdminProductDetailDto';
+import { AlertService } from '../../../shared/services/alert-service';
 
 @Component({
   selector: 'app-products',
@@ -34,7 +35,7 @@ export class Products implements OnInit {
   selectedProduct?: AdminProductDetailDto;
   selectedProductId?: number;
 
-  constructor(private http: AdminProductHttp, private router: Router) { }
+  constructor(private adminProductHttp: AdminProductHttp, private router: Router, private alertService: AlertService) { }
 
   goToEdit(productId: number, event: MouseEvent) {
     event.stopPropagation();
@@ -49,12 +50,20 @@ export class Products implements OnInit {
   }
 
   deleteProduct(productId: number) {
-
+    if (confirm(`Deleting product n° ${productId}, continue?`)) {
+      this.adminProductHttp.deleteProduct(productId).subscribe({
+        next: () => {
+          this.alertService.showAlert('Product deleted successfully', 'success');
+        },
+        error: (err) => {
+          console.error("Error during the process of deletion", err);
+        }
+      })
+    }
   }
 
   ngOnInit(): void {
     this.loadProducts();
-    console.log(this.selectedProduct);
   }
 
   onSearch() {
@@ -65,7 +74,7 @@ export class Products implements OnInit {
   loadProducts(): void {
     this.isLoading = true;
 
-    this.http
+    this.adminProductHttp
       .getProductList(
         this.page,
         this.pageSize,
@@ -131,7 +140,7 @@ export class Products implements OnInit {
       return;
     }
 
-    this.http.getProductDetail(productId).subscribe((detail) => {
+    this.adminProductHttp.getProductDetail(productId).subscribe((detail) => {
       this.selectedProductId = productId;
       this.selectedProduct = detail;
     });

@@ -60,7 +60,7 @@
 
 <ul *ngIf="products.length > 0" class="product-list">
   <li *ngFor="let p of products" class="product-item">
-    <div class="product-row" title="click to show details" (click)="selectProduct(p.productId)">
+    <div class="product-row" (click)="selectProduct(p.productId)">
       <div class="product-info">
         <span class="product-name">{{ p.name }} </span>
         <small class="product-number">{{ p.productNumber }}</small>
@@ -81,6 +81,7 @@
         <h4>General</h4>
       </div>
       <div class="view-details">
+        <p><strong>Id: </strong>{{ selectedProduct.productId }}</p>
         <p><strong>Parent category: </strong> {{ selectedProduct.productParentCategoryName }}</p>
         <p><strong>Sub category: </strong> {{ selectedProduct.productCategoryName }}</p>
         <p><strong>Model: </strong>{{ selectedProduct.productModelName }}</p>

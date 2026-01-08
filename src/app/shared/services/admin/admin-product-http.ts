@@ -64,13 +64,18 @@ export class AdminProductHttp {
     return this.http.get<AdminProductModelDto[]>(`${this.apiUrl}/models`);
   }
 
-  // UPDATE
+  // update
   updateProduct(dto: AdminProductUpdateDto) {
     return this.http.put(`${this.apiUrl}/${dto.productId}`, dto);
   }
 
-  // CREATE
+  // create
   createProduct(dto: AdminProductCreateDto) {
     return this.http.post<number>(this.apiUrl, dto);
+  }
+
+  // delete
+  deleteProduct(productId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${productId}`);
   }
 }
