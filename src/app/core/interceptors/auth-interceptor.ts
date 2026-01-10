@@ -20,30 +20,26 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       
-      // Prevent infinite refresh loop
+      /**
+       * quando l'url contiene ancora '/Auth/Refresh'
+       * imposta SetJwtInfo a false per invalidare l'info del Jwt
+       * o segnalare che non è autenticato. Questo impedisce
+       * di mandare altre richieste di resfresh token e non creare loop 
+       * infinite di errori 401
+       */
       if (req.url.includes('/Auth/Refresh')) {
-        console.error(
-          '%c[INTERCEPTOR] Refresh failed → logging out.',
-          'color: red; font-weight: bold;'
-        );
-
         authService.SetJwtInfo(false, '');
         return throwError(() => error);
       }
 
       if (error.status === 401) {
         console.warn(
-          '%c[INTERCEPTOR] 401 detected → attempting refresh...',
+          '%c[INTERCEPTOR] Access token has expired... refresh token request sent',
           'color: orange; font-weight: bold;'
         );
 
         return authService.refreshToken().pipe(
           switchMap((newToken: string) => {
-            console.log(
-              '%c[INTERCEPTOR] New access token received → retrying original request.',
-              'color: green; font-weight: bold;'
-            );
-
             const retryReq = req.clone({
               setHeaders: { Authorization: `Bearer ${newToken}` },
             });

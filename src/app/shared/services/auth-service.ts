@@ -33,6 +33,14 @@ export class AuthService {
     return localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
   }
 
+  /**
+   * ci permette di salvare il token
+   * al localStorage o al sessionStorage
+   * @param isLogged 
+   * @param token 
+   * @param email 
+   * @param persistent 
+   */
   SetJwtInfo(isLogged: boolean, token: string = '', email?: string, persistent: boolean = true) {
     if (isLogged) {
       // Token STORAGE
@@ -74,33 +82,20 @@ export class AuthService {
 
     // If a refresh request is already running → queue this request
     if (this.refreshInProgress) {
-      console.log(
-        '%c[AUTH] Refresh already in progress. Queueing request...',
-        'color: gold; font-weight: bold;'
-      );
       return this.refreshSubject.asObservable();
     }
 
     // Begin refresh process
     this.refreshInProgress = true;
-    console.log(
-      '%c[AUTH] Starting refresh token request...',
-      'color: dodgerblue; font-weight: bold;'
-    );
 
     return refreshRequest.pipe(
       tap(response => {
-        console.log(
-          '%c[AUTH] Refresh response received from backend.',
-          'color: purple; font-weight: bold;'
-        );
-
         const newToken = response.body?.token;
         const email = this.getStoredEmail();
 
         if (newToken) {
           console.log(
-            '%c[AUTH] A NEW ACCESS TOKEN HAS BEEN PROVIDED.',
+            '%c[AUTHENTICATION SERVICE] NEW ACCESS TOKEN HAS BEEN PROVIDED.',
             'color: limegreen; font-weight: bold;'
           );
           this.SetJwtInfo(true, newToken, email ?? undefined, true);
@@ -121,6 +116,11 @@ export class AuthService {
         tap(() => this.SetJwtInfo(false, '')));
   }
 
+  /**
+   * controlla il ruolo dell'utente tramite il token ricevuto
+   * @param token 
+   * @returns true se l'utente è un Admin
+   */
   private extractIsAdminFromToken(token: string): boolean {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
