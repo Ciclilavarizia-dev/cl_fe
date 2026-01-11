@@ -15,3 +15,9 @@
 .top-loader.top-loader--active {
   opacity: 1;
 }
+
+.router-container {
+  min-height: 100vh;
+  /* padding-top: 133px; */
+
+}

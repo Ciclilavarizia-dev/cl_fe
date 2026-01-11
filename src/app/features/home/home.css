@@ -1,6 +1,5 @@
 .home-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  width: 100%;
 }
 
 /* --- HERO SECTION CON SLIDER --- */
@@ -8,8 +7,8 @@
   /* La variabile per l'immagine verrà iniettata via [style.background-image] nel TS */
   background-size: cover;
   background-position: 55% center;
-  height: 90vh;
-  min-height: 500px;
+  height: 70vh;
+  /* min-height: 500px; */
   display: flex;
   align-items: center;
   justify-content: center;

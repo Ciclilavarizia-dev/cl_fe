@@ -1,59 +1,57 @@
-<div class="full-navbar" [class.full-navbar--hidden]="isHidden">
-  <section class="upper-nav">
-    <nav class="nav-container">
-      <div class="logo-box">
-        <a routerLink="/home">
-          <img src="assets/images/logo/logo-nobg-tagliato.png" alt="logo" />
-        </a>
+<div class="full-navbar" [class.full-navbar--fixed]="isFixed">
+  <nav class="row">
+
+    <!-- LOGO -->
+    <div class="col-2">
+      <a routerLink="/home">
+        <img src="assets/images/logo/logo-nobg-tagliato.png" alt="logo" />
+      </a>
+    </div>
+
+    <!-- Search bar: NASCOSTA su mobile, VISIBILE su desktop -->
+    <div class="col-8">
+      <app-search-bar />
+    </div>
+
+    <!-- Contenitore del icona del profilo e carello -->
+    <div class="col-2">
+
+      <app-cart-badge />
+
+      <div class="user-profile" (mouseenter)="showMenuNow(true)" (mouseleave)="hideMenuWithDelay()">
+        @if (!isLogged) {
+        <p class="btn" routerLink="/login">LOGIN</p>
+        <i routerLink="/login" class="bi bi-person-circle person-lg"></i>
+        } @if (isLogged) { @if (userEmail) {
+        <div class="user-icon">
+          {{ userEmail[0] | uppercase }}
+        </div>
+        } }
+
+        <!-- Dropdown -->
+        <div class="user-dropdown" *ngIf="showUserMenu">
+          <a routerLink="/profile"><i class="bi bi-person-fill"></i> Profilo</a>
+          <a (click)="logout()"> <i class="bi bi-box-arrow-right"></i>Logout</a>
+        </div>
       </div>
 
-      <!-- Search bar: NASCOSTA su mobile, VISIBILE su desktop -->
-      <div class="d-none d-md-block search-bar-wrapper">
+      <!-- Pulsante hamburger -->
+      <button class="hamburger" (click)="toggleMenu()" [class.show]="showHamburgerMenu">☰</button>
+    </div>
+
+    <!-- Menu Hamburger: search bar VISIBILE solo qui su mobile -->
+    <div class="hamburger-window" [class.open]="showHamburgerMenu">
+      <div class="search-bar-mobile-wrapper">
         <app-search-bar />
       </div>
 
-      <div class="settings-navbar">
-        <!-- <div class="cart">
-        <i class="bi bi-cart-fill">
-          <span class="cart-count">0</span>
-        </i>
-      </div> -->
-        <app-cart-badge />
-        <div class="user-profile" (mouseenter)="showMenuNow(true)" (mouseleave)="hideMenuWithDelay()">
-          @if (!isLogged) {
-          <p routerLink="/login">Login</p>
-          <i routerLink="/login" class="bi bi-person-circle person-lg"></i>
-          } @if (isLogged) { @if (userEmail) {
-          <div class="user-icon">
-            {{ userEmail[0] | uppercase }}
-          </div>
-          } }
-
-          <!-- Dropdown -->
-          <div class="user-dropdown" *ngIf="showUserMenu">
-            <a routerLink="/profile"><i class="bi bi-person-fill"></i> Profilo</a>
-            <a (click)="logout()"> <i class="bi bi-box-arrow-right"></i>Logout</a>
-          </div>
-        </div>
-
-        <!-- Pulsante hamburger -->
-        <button class="hamburger" (click)="toggleMenu()" [class.show]="showHamburgerMenu">☰</button>
-      </div>
-
-      <!-- Menu Hamburger: search bar VISIBILE solo qui su mobile -->
-      <div class="hamburger-window" [class.open]="showHamburgerMenu">
-        <div class="search-bar-mobile-wrapper">
-          <app-search-bar />
-        </div>
-
-        <ul>
-          <li *ngFor="let link of childLinks">
-            <a [routerLink]="link.path">{{ link.label }}</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </section>
+      <ul>
+        <li *ngFor="let link of childLinks">
+          <a [routerLink]="link.path">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
   <section class="lower-nav">
     <app-main-categories-bar></app-main-categories-bar>

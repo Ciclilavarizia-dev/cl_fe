@@ -26,7 +26,7 @@ export class Navbar {
 
   // for scrolling
   lastScroll = 0;
-  isHidden = false;
+  isFixed = false;
 
   childLinks = [
     { label: 'BIKES', path: '/bikes' },
@@ -79,15 +79,23 @@ export class Navbar {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const currentScroll = window.scrollY;
+    const current = window.scrollY;
 
-    if (currentScroll > this.lastScroll && currentScroll > 50) {
-      this.isHidden = true;
-    } else {
-      this.isHidden = false;
+    // scroll UP → reveal immediately
+    if (current < this.lastScroll) {
+      this.isFixed = true;
     }
 
-    this.lastScroll = currentScroll;
+    // scroll DOWN → release navbar to normal flow
+    if (current > this.lastScroll) {
+      this.isFixed = false;
+    }
+
+    if (current === 0) {
+      this.isFixed = false;
+    }
+
+    this.lastScroll = current;
   }
 
   toggleMenu() {

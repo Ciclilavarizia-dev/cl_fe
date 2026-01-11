@@ -1,85 +1,35 @@
 div.full-navbar {
   width: 100%;
-  position: fixed;
-  z-index: 1000;
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease;
 
-  nav.nav-container {
+  nav.row {
     background-color: #1e1e1e;
-    padding: 10px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap; // ⭐ AGGIUNTO per far scorrere il menu
     color: white;
+    padding: 0px 0px;
+    margin: 0;
 
-    div.logo-box {
-      width: 200px;
-      flex: 0 0 auto;
+    div.col-2 {
+      width: 150px;
+      padding: 0px 0px;
 
       img {
         width: 100%;
       }
     }
 
-    // Wrapper per app-search-bar (desktop)
-    div.search-bar-wrapper {
-      flex: 1 1 auto;
-      min-width: 300px;
-      max-width: 900px;
-
-      app-search-bar {
-        display: block;
-        width: 100%;
-      }
-    }
-
     // Vecchio searchbar
-    div.searchbar {
-      width: 45%;
 
-      form {
-        position: relative;
-        width: 100%;
-
-        input {
-          width: 100%;
-          padding: 17px 18px;
-          border-radius: 24px;
-          border: none;
-
-          &:focus {
-            outline: none;
-            border: 2px solid #6f8c3f;
-            box-shadow: 0 0 4px rgba(111, 140, 63, 0.4);
-          }
-        }
-
-        button {
-          position: absolute;
-          right: 12px;
-          top: 50%;
-          transform: translateY(-50%);
-          background: none;
-          border: none;
-          color: #7f8c8d;
-          cursor: pointer;
-
-          i {
-            font-size: 24px;
-            font-style: bold;
-            color: #ff5700;
-          }
-        }
-      }
-    }
-
-    div.settings-navbar {
+    div.col-2 {
       display: flex;
       gap: 30px;
       align-items: center;
-      margin-right: 20px;
-      flex: 0 0 auto;
+      justify-content: center;
+      padding: 0px 0px;
+      // margin-right: 0px;
 
       div.cart {
         i.bi-cart-fill {
@@ -105,9 +55,18 @@ div.full-navbar {
 
         p {
           margin-bottom: 0px;
-          padding: 15px 39px;
-          background-color: #ff5700;
+          padding: 6px 20px;
+          background-color: #ffffff;
+          color: #1e1e1e;
           border-radius: 24px;
+          font-weight: 600;
+          font-size: small;
+        }
+
+        p:hover {
+          background-color: #ff5700;
+          transition: ease 0.3s;
+          color: #ffffff;
         }
 
         i.person-lg {
@@ -179,15 +138,16 @@ div.full-navbar {
   }
 }
 
-.full-navbar--hidden {
-  transform: translateY(-100%);
-  backdrop-filter: blur(8px);
+.full-navbar--fixed {
+  position: fixed;
+  z-index: 1090;
+  transform: translateY(0);
+  animation: slideDown 0.25s ease;
 }
 
-
-hr {
-  margin: 0;
-  color: white;
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
 }
 
 // ⭐ Menu hamburger che SCORRE invece di sovrapporsi
