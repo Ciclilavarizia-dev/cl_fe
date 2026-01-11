@@ -10,7 +10,7 @@ import { CartBadgeComponent } from '../navbar/cart-badge/cart-badge';
 @Component({
   selector: 'app-navbar',
   imports: [MainCategoriesBar, RouterLink, CommonModule, SearchBar, CartBadgeComponent],
-templateUrl: './navbar.html',
+  templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
 export class Navbar {
@@ -18,8 +18,15 @@ export class Navbar {
   isLogged = false;
   userEmail: string | null = null;
 
+  // responsiveness
   showHamburgerMenu = false;
+
+  // user menu
   showUserMenu = false;
+
+  // for scrolling
+  lastScroll = 0;
+  isHidden = false;
 
   childLinks = [
     { label: 'BIKES', path: '/bikes' },
@@ -27,9 +34,9 @@ export class Navbar {
     { label: 'CLOTHING', path: '/clothing' },
     { label: 'ACCESSORIES', path: '/accessories' },
   ];
-  
+
   // Costrutto per implementare il logout
-  constructor(private router: Router, public authService: AuthService, private alertService: AlertService) {}
+  constructor(private router: Router, public authService: AuthService, private alertService: AlertService) { }
 
   ngOnInit() {
     // Subscribe to login updates
@@ -41,7 +48,7 @@ export class Navbar {
     this.authService.logoutBackend().subscribe(() => {
 
       this.alertService.showAlert('logged out successfully', 'success');
-      
+
       this.router.navigate(['/login']);
       console.log('logout successful');
     });
@@ -70,9 +77,22 @@ export class Navbar {
     }
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > this.lastScroll && currentScroll > 50) {
+      this.isHidden = true;
+    } else {
+      this.isHidden = false;
+    }
+
+    this.lastScroll = currentScroll;
+  }
+
   toggleMenu() {
     this.showHamburgerMenu = !this.showHamburgerMenu;
   }
 
-  
+
 }

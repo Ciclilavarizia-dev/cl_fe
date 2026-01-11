@@ -1,176 +1,189 @@
-div.nav-container {
-  background-color: #1e1e1e;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap; // ⭐ AGGIUNTO per far scorrere il menu
-  color: white;
+div.full-navbar {
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  transition: transform 0.3s ease;
 
-  div.logo-box {
-    width: 200px;
-    flex: 0 0 auto;
-
-    img {
-      width: 100%;
-    }
-  }
-
-  // Wrapper per app-search-bar (desktop)
-  div.search-bar-wrapper {
-    flex: 1 1 auto;
-    min-width: 300px;
-    max-width: 900px;
-    
-    app-search-bar {
-      display: block;
-      width: 100%;
-    }
-  }
-
-  // Vecchio searchbar
-  div.searchbar {
-    width: 45%;
-
-    form {
-      position: relative;
-      width: 100%;
-
-      input {
-        width: 100%;
-        padding: 17px 18px;
-        border-radius: 24px;
-        border: none;
-
-        &:focus {
-          outline: none;
-          border: 2px solid #6f8c3f;
-          box-shadow: 0 0 4px rgba(111, 140, 63, 0.4);
-        }
-      }
-
-      button {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: #7f8c8d;
-        cursor: pointer;
-
-        i {
-          font-size: 24px;
-          font-style: bold;
-          color: #ff5700;
-        }
-      }
-    }
-  }
-
-  div.settings-navbar {
+  nav.nav-container {
+    background-color: #1e1e1e;
+    padding: 10px 20px;
     display: flex;
-    gap: 30px;
     align-items: center;
-    margin-right: 20px;
-    flex: 0 0 auto;
+    justify-content: space-between;
+    flex-wrap: wrap; // ⭐ AGGIUNTO per far scorrere il menu
+    color: white;
 
-    div.cart {
-      i.bi-cart-fill {
-        font-size: 25px;
-        position: relative;
+    div.logo-box {
+      width: 200px;
+      flex: 0 0 auto;
 
-        span.cart-count {
-          position: absolute;
-          top: -8px;
-          right: -10px;
-          background-color: #ff5700;
-          color: white;
-          border-radius: 50%;
-          padding: 0px 6px;
-          font-size: 12px;
-        }
+      img {
+        width: 100%;
       }
     }
 
-    div.user-profile {
-      position: relative;
-      cursor: pointer;
+    // Wrapper per app-search-bar (desktop)
+    div.search-bar-wrapper {
+      flex: 1 1 auto;
+      min-width: 300px;
+      max-width: 900px;
 
-      p {
-        margin-bottom: 0px;
-        padding: 15px 39px;
-        background-color: #ff5700;
-        border-radius: 24px;
+      app-search-bar {
+        display: block;
+        width: 100%;
       }
+    }
 
-      i.person-lg {
-        display: none;
-        color: #ffffff;
-      }
+    // Vecchio searchbar
+    div.searchbar {
+      width: 45%;
 
-      div.user-icon {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        background: #4c6ef5;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        cursor: pointer;
-      }
+      form {
+        position: relative;
+        width: 100%;
 
-      .user-dropdown {
-        position: absolute;
-        top: 55px;
-        text-align: center;
-        width: 200px;
-        right: 0;
-        background-color: #ffffff;
-        border-radius: 12px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        min-width: 140px;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        input {
+          width: 100%;
+          padding: 17px 18px;
+          border-radius: 24px;
+          border: none;
 
-        a {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: black;
-          padding: 10px 15px;
-          text-decoration: none;
-          font-size: 14px;
-          white-space: nowrap;
+          &:focus {
+            outline: none;
+            border: 2px solid #6f8c3f;
+            box-shadow: 0 0 4px rgba(111, 140, 63, 0.4);
+          }
+        }
+
+        button {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: #7f8c8d;
+          cursor: pointer;
 
           i {
-            display: block !important;
-            font-size: 25px;
-            background-color: #ff5700;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            color: white;
-          }
-
-          &:hover {
-            background-color: #ff5700;
-            color: white;
+            font-size: 24px;
+            font-style: bold;
+            color: #ff5700;
           }
         }
       }
     }
 
-    button.hamburger {
-      display: none;
+    div.settings-navbar {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin-right: 20px;
+      flex: 0 0 auto;
+
+      div.cart {
+        i.bi-cart-fill {
+          font-size: 25px;
+          position: relative;
+
+          span.cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: #ff5700;
+            color: white;
+            border-radius: 50%;
+            padding: 0px 6px;
+            font-size: 12px;
+          }
+        }
+      }
+
+      div.user-profile {
+        position: relative;
+        cursor: pointer;
+
+        p {
+          margin-bottom: 0px;
+          padding: 15px 39px;
+          background-color: #ff5700;
+          border-radius: 24px;
+        }
+
+        i.person-lg {
+          display: none;
+          color: #ffffff;
+        }
+
+        div.user-icon {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          background: #4c6ef5;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        .user-dropdown {
+          position: absolute;
+          top: 55px;
+          text-align: center;
+          width: 200px;
+          right: 0;
+          background-color: #ffffff;
+          border-radius: 12px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          min-width: 140px;
+          z-index: 1000;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+          a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            white-space: nowrap;
+
+            i {
+              display: block !important;
+              font-size: 25px;
+              background-color: #ff5700;
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+              text-align: center;
+              color: white;
+            }
+
+            &:hover {
+              background-color: #ff5700;
+              color: white;
+            }
+          }
+        }
+      }
+
+      button.hamburger {
+        display: none;
+      }
     }
   }
 }
+
+.full-navbar--hidden {
+  transform: translateY(-100%);
+  backdrop-filter: blur(8px);
+}
+
 
 hr {
   margin: 0;
@@ -199,7 +212,7 @@ div.hamburger-window {
   div.search-bar-mobile-wrapper {
     width: 85%;
     margin: 0 auto 1rem;
-    
+
     app-search-bar {
       display: block;
       width: 100%;
