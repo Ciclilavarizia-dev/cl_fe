@@ -1,20 +1,20 @@
 <div #navbar class="full-navbar" [style.transform]="'translateY(' + offset + 'px)'">
-  <nav class="row">
+  <nav class="main-navbar">
 
     <!-- LOGO -->
-    <div class="col-2">
+    <div class="left-navbar">
       <a routerLink="/home">
         <img src="assets/images/logo/logo-nobg-tagliato.png" alt="logo" />
       </a>
     </div>
 
     <!-- Search bar: NASCOSTA su mobile, VISIBILE su desktop -->
-    <div class="col-8">
+    <div class="search-bar">
       <app-search-bar />
     </div>
 
     <!-- Contenitore del icona del profilo e carello -->
-    <div class="col-2">
+    <div class="right-navbar">
 
       <app-cart-badge />
 
