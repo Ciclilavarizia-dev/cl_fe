@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MainCategoriesBar } from './main-categories-bar/main-categories-bar';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -26,7 +26,10 @@ export class Navbar {
 
   // for scrolling
   lastScroll = 0;
-  isFixed = false;
+  offset = 0;
+  navbarHeight = 0;
+
+  @ViewChild('navbar', { static: true }) navbar!: ElementRef<HTMLElement>;
 
   childLinks = [
     { label: 'BIKES', path: '/bikes' },
@@ -37,6 +40,10 @@ export class Navbar {
 
   // Costrutto per implementare il logout
   constructor(private router: Router, public authService: AuthService, private alertService: AlertService) { }
+
+  ngAfterViewInit() {
+    this.navbarHeight = this.navbar.nativeElement.offsetHeight;
+  }
 
   ngOnInit() {
     // Subscribe to login updates
@@ -80,19 +87,21 @@ export class Navbar {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const current = window.scrollY;
+    const delta = current - this.lastScroll;
 
-    // scroll UP → reveal immediately
-    if (current < this.lastScroll) {
-      this.isFixed = true;
+    // scrolling down -> move up
+    if (delta > 0) {
+      this.offset = Math.max(this.offset - delta, -this.navbarHeight);
     }
 
-    // scroll DOWN → release navbar to normal flow
-    if (current > this.lastScroll) {
-      this.isFixed = false;
+    // scrolling up -> move down
+    if (delta < 0) {
+      this.offset = Math.min(this.offset - delta, 0);
     }
 
+    // per far apparire subito quando ritorni su
     if (current === 0) {
-      this.isFixed = false;
+      this.offset = 0;
     }
 
     this.lastScroll = current;
