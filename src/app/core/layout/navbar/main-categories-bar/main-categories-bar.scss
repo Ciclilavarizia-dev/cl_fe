@@ -4,11 +4,7 @@ div.main-categories-container {
   justify-content: center;
   background-color: #1e1e1e;
   border-top: 1px solid silver;
-
-  button.hamburger {
-    display: none;
-  }
-
+  
   ul.categories-list {
     display: flex;
     gap: 80px;
@@ -55,7 +51,6 @@ div.main-categories-container {
 
   // Admin control
   .admin-toggle {
-    // margin-left: auto;
     position: absolute;
     right: 0;
     top: 50%;
@@ -81,4 +76,15 @@ div.main-categories-container {
     margin: 0px;
   }
 
+}
+
+// MEDIA QUERIES
+@media (max-width: 576px) {
+  div.main-categories-container {
+    justify-content: start;
+    ul.categories-list {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 }

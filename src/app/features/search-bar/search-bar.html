@@ -11,9 +11,9 @@
     </button>
   </div>
 
+  
   @if (products.length > 0 && !filtersActive) {
-  <div class="position-absolute top-100 start-0 end-0 bg-white border rounded-3 shadow-lg mt-2 overflow-auto"
-    style="max-height: 400px; z-index: 1050">
+  <div class="result-list rounded-3 shadow-lg overflow-auto" style="max-height: 400px; z-index: 1050">
     @for (prod of products; track prod.productId) {
     <div class="d-flex align-items-center justify-content-between p-3 border-bottom list-item-hover" role="button"
       (click)="goToProduct(prod.productId)" title="Clicca per visualizzare dettagli">
@@ -26,5 +26,4 @@
     }
   </div>
   }
-
 </div>

@@ -20,3 +20,9 @@
   min-height: 100vh;
   padding-top: 107px;
 }
+
+@media (max-width: 576px) {
+  .router-container {
+    padding-top: 51px;
+  }
+}
