@@ -10,7 +10,7 @@
 
     <!-- Search bar: NASCOSTA su mobile, VISIBILE su desktop -->
     <div class="search-bar">
-      <app-search-bar />
+      <app-search-bar (openAdvancedSearchModal)="openAdvancedSearchModal.emit()"/>
     </div>
 
     <!-- Contenitore del icona del profilo e carello -->

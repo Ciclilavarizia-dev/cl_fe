@@ -1,5 +1,11 @@
 /* === COLORE PRINCIPALE #ff5700 === */
 
+.main-search-container {
+  display: flex;
+  justify-content: center;
+  padding: 15px 10px;
+}
+
 /* SERACH BAR: */
 .search-container {
   display: flex;
@@ -8,6 +14,7 @@
   background-color: white;
   padding: 5px 20px;
   align-items: center;
+  width: 55%;
 }
 
 .search-input {

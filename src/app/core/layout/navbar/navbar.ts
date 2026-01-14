@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MainCategoriesBar } from './main-categories-bar/main-categories-bar';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,8 @@ import { CartBadgeComponent } from '../navbar/cart-badge/cart-badge';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
+
+  @Output() openAdvancedSearchModal = new EventEmitter<void>();
 
   isLogged = false;
   userEmail: string | null = null;

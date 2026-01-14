@@ -2,7 +2,15 @@
 
 <app-alert></app-alert>
 
-<app-navbar></app-navbar>
+<app-navbar
+    (openAdvancedSearchModal)="openAdvancedSearchModal()"
+></app-navbar>
+
+<!-- MODALS: (importante) -->
+<app-advanced-search-modal
+  [open]="isModalOpen"
+  (closed)="closeAdvancedSearchModal()">
+</app-advanced-search-modal>
 
 <main class="router-container">
     <router-outlet />
