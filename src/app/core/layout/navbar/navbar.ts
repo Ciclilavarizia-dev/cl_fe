@@ -33,13 +33,6 @@ export class Navbar {
 
   @ViewChild('navbar', { static: true }) navbar!: ElementRef<HTMLElement>;
 
-  childLinks = [
-    { label: 'BIKES', path: '/bikes' },
-    { label: 'COMPONENT', path: '/component' },
-    { label: 'CLOTHING', path: '/clothing' },
-    { label: 'ACCESSORIES', path: '/accessories' },
-  ];
-
   // Costrutto per implementare il logout
   constructor(private router: Router, public authService: AuthService, private alertService: AlertService) { }
 

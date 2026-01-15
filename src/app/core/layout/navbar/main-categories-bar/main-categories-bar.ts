@@ -31,6 +31,7 @@ export class MainCategoriesBar {
   isAdmin = false;
   adminMode = false;
 
+  @Input({ required: true }) open!: boolean;
   @Input({ required: true }) onClose!: () => void;
 
   closeMainCategories() {

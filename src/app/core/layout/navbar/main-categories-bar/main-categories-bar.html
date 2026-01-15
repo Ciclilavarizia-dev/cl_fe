@@ -1,5 +1,5 @@
 <div class="main-categories-container">
-  <ul class="categories-list">
+  <ul class="categories-list" [class.open]="open">
     @for (link of links; track link.path) {
     <li class="nav-link">
       <a [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -7,6 +7,7 @@
       </a>
     </li>
     }
+    <!-- pulsante per chiudere il main-categories-bar solo al mobile -->
     <button class="close-menu-btn" type="button" (click)="closeMainCategories()">
       <i class="bi bi-caret-up" style="color: white;"></i>
     </button>

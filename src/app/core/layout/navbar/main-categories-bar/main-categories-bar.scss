@@ -1,16 +1,17 @@
 div.main-categories-container {
-  position: relative;
   display: flex;
   justify-content: center;
-  background-color: #1e1e1e;
   border-top: 1px solid silver;
-  
+  background-color: #1e1e1e;
+
   ul.categories-list {
     display: flex;
     gap: 80px;
     padding: 8px 20px;
     margin: 0;
     justify-content: center;
+    // border-top: 1px solid silver;
+    // background-color: #1e1e1e;
 
     li.nav-link {
       a {
@@ -84,12 +85,27 @@ div.main-categories-container {
 // MEDIA QUERIES
 @media (max-width: 576px) {
   div.main-categories-container {
+    position: relative;
     justify-content: start;
+    background-color: transparent;
+    z-index: 1;
+
     ul.categories-list {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
       flex-direction: column;
       gap: 0px;
       width: 100%;
       padding: 0px 0px;
+      top: 100%;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      will-change: transform; // optimizzazione per il browser
+      
+      background-color: #1e1e1e;
+      pointer-events: none;
 
       li.nav-link {
         padding: 7px 10px;
@@ -101,13 +117,12 @@ div.main-categories-container {
         border: none;
         padding: 6px 0;
       }
-
-      // Per non applicare il bordo all'ultimo elemento
-      li.nav-link:not(:last-child) {
-        // Indeciso se mettere delle divisioni
-        // border-bottom: 1px solid rgb(179, 179, 179);
-      }
     }
-    
+
+    ul.categories-list.open {
+      transform: translateY(0);
+      pointer-events: auto;
+    }
   }
+
 }
