@@ -19,6 +19,7 @@
 .router-container {
   min-height: 100vh;
   padding-top: 107px;
+  overflow: visible;
 }
 
 @media (max-width: 576px) {

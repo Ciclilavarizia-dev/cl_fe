@@ -18,14 +18,16 @@
       <app-cart-badge />
 
       <div class="user-profile" (mouseenter)="showMenuNow(true)" (mouseleave)="hideMenuWithDelay()">
-        @if (!isLogged) {
+        @if (!isLogged && !userEmail) {
         <p class="btn" routerLink="/login">LOGIN</p>
         <i routerLink="/login" class="bi bi-person-circle person-lg"></i>
-        } @if (isLogged) { @if (userEmail) {
+        }
+
+        @if (isLogged && userEmail) {
         <div class="user-icon">
           {{ userEmail[0] | uppercase }}
         </div>
-        } }
+        }
 
         <!-- Dropdown -->
         <div class="user-dropdown" *ngIf="showUserMenu">
@@ -41,9 +43,6 @@
     </div>
   </nav>
 
-  <app-main-categories-bar 
-    [open]="showHamburgerMenu" 
-    [onClose]="closeMenu" 
-  />
+  <app-main-categories-bar [open]="showHamburgerMenu" [onClose]="closeMenu" />
 
 </div>

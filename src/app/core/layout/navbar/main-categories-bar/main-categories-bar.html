@@ -7,15 +7,14 @@
       </a>
     </li>
     }
+    @if (isAdmin) {
+    <button class="admin-toggle" (click)="toggleAdminMode()" title="Toggle admin mode">
+      {{ adminMode ? 'SHOP' : 'ADMIN' }}
+    </button>
+    }
     <!-- pulsante per chiudere il main-categories-bar solo al mobile -->
     <button class="close-menu-btn" type="button" (click)="closeMainCategories()">
       <i class="bi bi-caret-up" style="color: white;"></i>
     </button>
   </ul>
-
-  @if (isAdmin) {
-  <button class="admin-toggle" (click)="toggleAdminMode()" title="Toggle admin mode">
-    {{ adminMode ? 'SHOP' : 'ADMIN' }}
-  </button>
-  }
 </div>

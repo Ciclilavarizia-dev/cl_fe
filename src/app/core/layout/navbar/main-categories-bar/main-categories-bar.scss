@@ -55,11 +55,7 @@ div.main-categories-container {
 
   // Admin control
   .admin-toggle {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
+    position: relative;
     background: transparent;
     border: 1px solid white;
     padding: 0.3rem 0.8rem;
@@ -122,6 +118,10 @@ div.main-categories-container {
     ul.categories-list.open {
       transform: translateY(0);
       pointer-events: auto;
+    }
+
+    .admin-toggle {
+      border: 0;
     }
   }
 

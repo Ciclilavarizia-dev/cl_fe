@@ -4,7 +4,6 @@ div.full-navbar {
   left: 0;
   z-index: 1030;
   width: 100%;
-  will-change: transform;
   transition: transform 0.08s linear;
 
   nav.main-navbar {
@@ -155,7 +154,7 @@ div.full-navbar nav.main-navbar {
       padding: 0px 7px;
 
       div.left-navbar {
-        width: 100px;
+        display: none;
       }
 
       div.right-navbar {

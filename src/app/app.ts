@@ -6,10 +6,11 @@ import { filter } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { Alert } from './shared/components/alert/alert';
 import { AdvancedSearchModal } from './features/advanced-search-modal/advanced-search-modal';
+import { MobileNavbar } from "./core/layout/mobile-navbar/mobile-navbar";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, RouterModule, Alert, Footer, AdvancedSearchModal],
+  imports: [RouterOutlet, Navbar, RouterModule, Alert, Footer, AdvancedSearchModal, MobileNavbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

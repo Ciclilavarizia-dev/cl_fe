@@ -6,10 +6,11 @@ import { AuthService } from '../../../shared/services/auth-service';
 import { SearchBar } from '../../../features/search-bar/search-bar';
 import { AlertService } from '../../../shared/services/alert-service';
 import { CartBadgeComponent } from '../navbar/cart-badge/cart-badge';
+import { MobileNavbar } from "../mobile-navbar/mobile-navbar";
 
 @Component({
   selector: 'app-navbar',
-  imports: [MainCategoriesBar, RouterLink, CommonModule, SearchBar, CartBadgeComponent],
+  imports: [MainCategoriesBar, RouterLink, CommonModule, SearchBar, CartBadgeComponent, MobileNavbar],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
