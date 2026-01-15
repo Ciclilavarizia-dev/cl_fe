@@ -112,4 +112,8 @@ export class Navbar {
   toggleMenu() {
     this.showHamburgerMenu = !this.showHamburgerMenu;
   }
+
+  closeMenu = () => {
+    this.showHamburgerMenu = false;
+  };
 }

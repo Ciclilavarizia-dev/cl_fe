@@ -10,7 +10,6 @@ div.main-categories-container {
     gap: 80px;
     padding: 8px 20px;
     margin: 0;
-    list-style: none;
     justify-content: center;
 
     li.nav-link {
@@ -45,6 +44,10 @@ div.main-categories-container {
         }
 
       }
+    }
+
+    button.close-menu-btn {
+      display: none;
     }
 
   }
@@ -84,7 +87,27 @@ div.main-categories-container {
     justify-content: start;
     ul.categories-list {
       flex-direction: column;
-      gap: 10px;
+      gap: 0px;
+      width: 100%;
+      padding: 0px 0px;
+
+      li.nav-link {
+        padding: 7px 10px;
+      }
+
+      button.close-menu-btn {
+        display: block;
+        background-color: #1e1e1e;
+        border: none;
+        padding: 6px 0;
+      }
+
+      // Per non applicare il bordo all'ultimo elemento
+      li.nav-link:not(:last-child) {
+        // Indeciso se mettere delle divisioni
+        // border-bottom: 1px solid rgb(179, 179, 179);
+      }
     }
+    
   }
 }

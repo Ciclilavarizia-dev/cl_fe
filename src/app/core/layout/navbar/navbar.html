@@ -54,12 +54,12 @@
   </nav>
 
   <div class="desktop-only">
-    <app-main-categories-bar />
+    <app-main-categories-bar [onClose]="closeMenu" />
   </div>
 
   <div class="mobile-only">
     @if (showHamburgerMenu) {
-    <app-main-categories-bar />
+    <app-main-categories-bar [onClose]="closeMenu" />
     }
   </div>
 
