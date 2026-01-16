@@ -7,7 +7,7 @@
   /* La variabile per l'immagine verrà iniettata via [style.background-image] nel TS */
   background-size: cover;
   background-position: 40% center;
-  height: 550px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
