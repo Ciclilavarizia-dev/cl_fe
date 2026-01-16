@@ -116,13 +116,25 @@ export class Cart implements OnInit {
     }
   }
 
-  proceedToCheckout(): void {
-    if (!this.cart || this.cart.items.length === 0) {
-      alert('Il carrello è vuoto');
-      return;
-    }
-    this.router.navigate(['/checkout']);
+proceedToCheckout(): void {
+  if (!this.cart || this.cart.items.length === 0) {
+    alert('Il carrello è vuoto');
+    return;
   }
+
+  // Chiamiamo il servizio per svuotare il carrello sul server
+  this.cartService.clearCart().subscribe({
+    next: () => {
+      // Una volta svuotato lato API, andiamo al checkout
+      this.router.navigate(['/checkout']);
+    },
+    error: (err) => {
+      console.error("Errore durante lo svuotamento pre-checkout", err);
+      // Opzionale: procediamo comunque o blocchiamo l'utente
+      this.router.navigate(['/checkout']);
+    }
+  });
+}
 
   continueShopping(): void {
     this.router.navigate(['/products']);
