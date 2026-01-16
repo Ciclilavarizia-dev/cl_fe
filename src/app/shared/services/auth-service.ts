@@ -8,16 +8,25 @@ import { LogoutHttp } from './logout-http';
 })
 export class AuthService {
 
-  private loggedSubject = new BehaviorSubject<boolean>(this.hasToken());
+  // Questi variabili determinano lo stato di autenticazione del'user
+
+  // Se il token c'è, ritorna TRUE, quindi è loggato
+  private loggedSubject = new BehaviorSubject<boolean>(this.hasToken()); 
+
+  // Rende lo stato leggibile per altri classi
   public logged$ = this.loggedSubject.asObservable();
 
+  // Ritorna l'email attualmente loggato
   private emailSubject = new BehaviorSubject<string | null>(this.getStoredEmail());
   public email$ = this.emailSubject.asObservable();
 
+  // Ritorna TRUE, se l'utente loggato è Admin
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   public isAdmin$ = this.isAdminSubject.asObservable();
 
   constructor(private httpRefresh: RefreshTokenHttp, private httpLogout: LogoutHttp) {
+    // Serve per mantenere il ruolo dell'admin ADMIN,
+    // Perché ci sono casi che se si ricarica la pagina con F5, il ruolo da admin può essere non considerato
     const token = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
     if (token) {
       const isAdmin = this.extractIsAdminFromToken(token);

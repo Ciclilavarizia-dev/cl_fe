@@ -5,8 +5,10 @@ import { catchError, switchMap, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   
-  const authService = inject(AuthService); // replaces constructor injection
+  // ignetto la istanza del auth-service che conterra il JWT ricevuto dal backend
+  const authService = inject(AuthService);
 
+  // recupero il JWT dal local storage o dal session storage
   const token = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
 
   let authReq = req;

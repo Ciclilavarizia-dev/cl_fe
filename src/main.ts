@@ -7,7 +7,12 @@ import { authInterceptor } from './app/core/interceptors/auth-interceptor';
 
 bootstrapApplication(App, {
   providers: [
+
+    // L’interceptor è registrato globalmente 
+    // tramite questa funzione, quindi impatta
+    // tutte le richieste HTTP dell’app.
     provideHttpClient(withInterceptors([authInterceptor])),
+
     provideRouter(routes)
   ]
 }).catch((err) => console.error(err));
