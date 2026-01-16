@@ -6,7 +6,7 @@
     <div class="hero-content" [class.fade-in]="isAnimating">
       <h1>{{ slides[currentSlide].title }}</h1>
       <p>{{ slides[currentSlide].text }}</p>
-      <button class="cta-button" routerLink="/products">Esplora Prodotti</button>
+      <!-- <button class="cta-button" routerLink="/products">Esplora Prodotti</button> -->
     </div>
 
     <div class="slide-indicators">
@@ -15,8 +15,11 @@
     </div>
   </section>
 
-  <app-highlight-section></app-highlight-section>
+  <!-- main categories section -->
+  <app-main-categories></app-main-categories>
 
+  <!-- highlight section -->
+  <app-highlight-section></app-highlight-section>
 
   <section class="cta-section">
     <div class="cta-content">

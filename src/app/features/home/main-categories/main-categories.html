@@ -1,1 +1,12 @@
-<p>main-categories works!</p>
+<div class="main-categories-container">
+    @for (category of featuredCategories; track trackByCategory(category)) {
+    <div class="category-card" (click)="onCategoryClick(category)">
+        <div class="category-image-box">
+            <img [src]="category.imageUrl" [alt]="category.name">
+        </div>
+        <div class="image-overlay">
+            <p>{{ category.name }}</p>
+        </div>
+    </div>
+    }
+</div>

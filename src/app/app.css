@@ -18,7 +18,7 @@
 
 .router-container {
   min-height: 100vh;
-  padding-top: 107px;
+  padding-top: var(--navbar-height);
   overflow: visible;
 }
 

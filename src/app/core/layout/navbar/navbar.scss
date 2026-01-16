@@ -14,10 +14,12 @@ div.full-navbar {
     color: white;
 
     div.left-navbar {
+      display: flex;
+      justify-content: center;
       width: 150px;
 
       img {
-        width: 100%;
+        width: 80%;
       }
     }
 
@@ -28,7 +30,7 @@ div.full-navbar {
     div.right-navbar {
       width: 150px;
       display: flex;
-      gap: 30px;
+      gap: 15px;
       align-items: center;
       justify-content: center;
 
@@ -53,7 +55,6 @@ div.full-navbar {
       div.user-profile {
         position: relative;
         cursor: pointer;
-        padding-right: 20px;
 
         p {
           margin-bottom: 0px;
@@ -77,8 +78,8 @@ div.full-navbar {
         }
 
         div.user-icon {
-          width: 35px;
-          height: 35px;
+          width: 29px;
+          height: 29px;
           border-radius: 50%;
           background: #4c6ef5;
           color: white;

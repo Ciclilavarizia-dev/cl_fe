@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HighlightSection } from './highlight-section/highlight-section';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MainCategories } from "./main-categories/main-categories";
 
 @Component({
   selector: 'app-home',
-  imports: [HighlightSection,RouterLink, CommonModule],
+  imports: [HighlightSection, RouterLink, CommonModule, MainCategories],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

@@ -38,7 +38,8 @@ export class Navbar {
   constructor(private router: Router, public authService: AuthService, private alertService: AlertService) { }
 
   ngAfterViewInit() {
-    this.navbarHeight = this.navbar.nativeElement.offsetHeight;
+    const hieght = this.navbar.nativeElement.offsetHeight;
+    document.documentElement.style.setProperty('--navbar-height', `${hieght}px`)
   }
 
   ngOnInit() {
@@ -73,11 +74,10 @@ export class Navbar {
     }, 1000);
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    if (window.innerWidth > 727 && this.showHamburgerMenu) {
-      this.showHamburgerMenu = false;
-    }
+  @HostListener('window:resize')
+  onResize() {
+    const height = this.navbar.nativeElement.offsetHeight;
+    document.documentElement.style.setProperty('--navbar-height', `${height}px`);
   }
 
   @HostListener('window:scroll', [])

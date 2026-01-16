@@ -6,9 +6,8 @@
 .hero-section {
   /* La variabile per l'immagine verrà iniettata via [style.background-image] nel TS */
   background-size: cover;
-  background-position: 55% center;
-  height: 70vh;
-  /* min-height: 500px; */
+  background-position: 40% center;
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,6 +169,10 @@ app-highlight-section {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .hero-section {
+    min-height: 350px;
+  }
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;
