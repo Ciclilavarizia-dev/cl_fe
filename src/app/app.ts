@@ -5,10 +5,12 @@ import { Footer } from './core/layout/footer/footer';
 import { filter } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { Alert } from './shared/components/alert/alert';
+import { AdvancedSearchModal } from './features/advanced-search-modal/advanced-search-modal';
+import { MobileNavbar } from "./core/layout/mobile-navbar/mobile-navbar";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, RouterModule, Alert, Footer],
+  imports: [RouterOutlet, Navbar, RouterModule, Alert, Footer, AdvancedSearchModal, MobileNavbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -88,6 +90,17 @@ export class App implements OnDestroy {
       clearTimeout(this.hideTimeout);
       this.hideTimeout = undefined;
     }
+  }
+
+  // Open advanced search modal logic
+  isModalOpen = false;
+
+  openAdvancedSearchModal() {
+    this.isModalOpen = true;
+  }
+
+  closeAdvancedSearchModal() {
+    this.isModalOpen = false;
   }
   
 }

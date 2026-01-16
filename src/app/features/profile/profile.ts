@@ -12,6 +12,8 @@ import { AuthService } from '../../shared/services/auth-service';
 import { CustomerUpdate } from '../../shared/models/CustomerUpdate';
 import { FormsModule } from '@angular/forms';
 import { Addresses } from './addresses/addresses';
+import { AlertService } from '../../shared/services/alert-service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -31,19 +33,19 @@ export class Profile implements OnInit {
 
   loading = true;
 
- showAddressManager = false;
-startWithCreate = false;
+  showAddressManager = false;
+  startWithCreate = false;
 
- openAddressManager(startWithCreate: boolean = false) {
-  this.startWithCreate = startWithCreate;
-  this.showAddressManager = true;
+  openAddressManager(startWithCreate: boolean = false) {
+    this.startWithCreate = startWithCreate;
+    this.showAddressManager = true;
 
-  // Cambia tab
-  const tabBtn = document.querySelector('[data-bs-target="#tab-address"]') as HTMLElement;
-  tabBtn?.click();
-}
+    // Cambia tab
+    const tabBtn = document.querySelector('[data-bs-target="#tab-address"]') as HTMLElement;
+    tabBtn?.click();
+  }
 
-    // Edit profilo toggle
+  // Edit profilo toggle
   isEditingProfile = false;
 
   expandedOrderId: number | null = null;
@@ -52,8 +54,10 @@ startWithCreate = false;
   constructor(
     private customerHttp: CustomerHttp,
     private orderHttp: OrderHttp,
-    public authService: AuthService
-  ) {}
+    public authService: AuthService,
+    private alertService: AlertService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadProfile();
@@ -104,7 +108,7 @@ startWithCreate = false;
     });
   }
 
-    // ===========================================
+  // ===========================================
   // ANNULLA MODIFICHE PROFILO
   // ===========================================
   resetProfile() {
@@ -114,7 +118,7 @@ startWithCreate = false;
   }
 
 
-    // ===========================================
+  // ===========================================
   // SALVA MODIFICHE PROFILO
   // ===========================================
   saveProfile() {
@@ -156,6 +160,16 @@ startWithCreate = false;
         });
       }
     }
+  }
+
+  logout() {
+    this.authService.logoutBackend().subscribe(() => {
+
+      this.alertService.showAlert('logged out successfully', 'success');
+
+      this.router.navigate(['/login']);
+      console.log('logout successful');
+    });
   }
 
 }

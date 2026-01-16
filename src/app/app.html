@@ -2,11 +2,20 @@
 
 <app-alert></app-alert>
 
+<app-navbar
+    (openAdvancedSearchModal)="openAdvancedSearchModal()"
+></app-navbar>
 
-<app-navbar></app-navbar>
+<!-- MODALS: (importante) -->
+<app-advanced-search-modal
+  [open]="isModalOpen"
+  (closed)="closeAdvancedSearchModal()">
+</app-advanced-search-modal>
 
+<main class="router-container">
+    <router-outlet />
+</main>
 
-
-<router-outlet />
+<app-mobile-navbar />
 
 <app-footer></app-footer>

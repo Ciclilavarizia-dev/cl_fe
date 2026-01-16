@@ -15,3 +15,15 @@
 .top-loader.top-loader--active {
   opacity: 1;
 }
+
+.router-container {
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+  overflow: visible;
+}
+
+@media (max-width: 576px) {
+  .router-container {
+    padding-top: 51px;
+  }
+}

@@ -20,7 +20,6 @@ type HomeProductCard = ProductCard & {
 export class HighlightSection implements OnInit {
   bestSellers: HomeProductCard[] = [];
   newArrivals: HomeProductCard[] = [];
-  featuredCategories: Category[] = []; // Tutte le categorie, nessun slice
 
   currentBestSellerIndex = 0;
   currentNewArrivalIndex = 0;
@@ -65,13 +64,6 @@ export class HighlightSection implements OnInit {
       this.newArrivals = data.map((p) => ({
         ...p,
         homeImage: this.applyHomeImage(p),
-      }));
-    });
-
-    this.productHttp.GetFeaturedCategories().subscribe((data) => {
-      this.featuredCategories = data.map((c) => ({
-        ...c,
-        imageUrl: this.getCategoryImage(c.name),
       }));
     });
   }
@@ -141,33 +133,9 @@ export class HighlightSection implements OnInit {
     return this.currentNewArrivalIndex + 5 < this.newArrivals.length;
   }
 
-  onCategoryClick(category: Category) {
-    // Naviga alla pagina prodotti filtrati per categoria
-    this.router.navigate(['/products'], { queryParams: { categoryId: category.categoryId } });
-  }
-
   // TRACK BY
   trackByProduct(index: number, product: ProductCard): number {
     return product.productId;
   }
 
-  trackByCategory(index: number, category: Category): number {
-    return category.categoryId;
-  }
-
-  // ⬇️ FUNZIONE AGGIUNTA PER L’IMMAGINE DELLA CATEGORIA
-  getCategoryImage(name: string): string {
-    switch (name.toLowerCase()) {
-      case 'bikes':
-        return 'assets/images/bike.png';
-      case 'components':
-        return 'assets/images/components.png';
-      case 'clothing':
-        return 'assets/images/clothing.png';
-      case 'accessories':
-        return 'assets/images/accessories.png';
-      default:
-        return 'assets/images/default.jpg';
-    }
-  }
 }

@@ -1,15 +1,13 @@
 .home-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  width: 100%;
 }
 
 /* --- HERO SECTION CON SLIDER --- */
 .hero-section {
   /* La variabile per l'immagine verrà iniettata via [style.background-image] nel TS */
   background-size: cover;
-  background-position: 55% center;
-  height: 90vh;
-  min-height: 500px;
+  background-position: 40% center;
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,6 +169,10 @@ app-highlight-section {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .hero-section {
+    min-height: 350px;
+  }
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;

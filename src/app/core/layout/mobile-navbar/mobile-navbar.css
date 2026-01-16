@@ -1,0 +1,38 @@
+.mobile-navbar-container {
+    position: fixed;
+    display: none;
+    background: #1e1e1e;
+    justify-content: center;
+    gap: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
+a {
+    padding: 5px 0;
+}
+
+.bi {
+    font-size: 24px;
+    color: white;
+    transition: color 0.4s ease;
+}
+
+/* pressed (tap) */
+/* .bi:active {
+    color: #ff5700;
+} */
+
+/* ROUTE ACTIVE (stays orange) */
+a.active .bi {
+  color: #ff5700;
+}
+
+@media (max-width: 576px) {
+    .mobile-navbar-container {
+        display: flex;
+    }
+}

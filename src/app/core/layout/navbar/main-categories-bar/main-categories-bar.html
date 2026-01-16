@@ -1,25 +1,20 @@
 <div class="main-categories-container">
-  <ul class="categories-list">
-    <li class="nav-link" *ngFor="let link of links">
-      <a 
-        [routerLink]="link.path" 
-        routerLinkActive="active" 
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+  <ul class="categories-list" [class.open]="open">
+    @for (link of links; track link.path) {
+    <li class="nav-link">
+      <a [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <span class="label">{{ link.label }}</span>
       </a>
     </li>
-  </ul>
-
-  @if (isAdmin) {
-    <button
-      class="admin-toggle"
-      (click)="toggleAdminMode()"
-      title="Toggle admin mode"
-    >
+    }
+    @if (isAdmin) {
+    <button class="admin-toggle" (click)="toggleAdminMode()" title="Toggle admin mode">
       {{ adminMode ? 'SHOP' : 'ADMIN' }}
     </button>
-  }
-
-  <hr />
+    }
+    <!-- pulsante per chiudere il main-categories-bar solo al mobile -->
+    <button class="close-menu-btn" type="button" (click)="closeMainCategories()">
+      <i class="bi bi-caret-up" style="color: white;"></i>
+    </button>
+  </ul>
 </div>

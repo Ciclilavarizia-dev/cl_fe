@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-main-categories-bar',
+  standalone: true,
   imports: [RouterLink, CommonModule, RouterLinkActive],
   templateUrl: './main-categories-bar.html',
   styleUrl: './main-categories-bar.scss',
@@ -27,9 +28,15 @@ export class MainCategoriesBar {
   ];
 
   links = this.shopLinks;
-
   isAdmin = false;
   adminMode = false;
+
+  @Input({ required: true }) open!: boolean;
+  @Input({ required: true }) onClose!: () => void;
+
+  closeMainCategories() {
+    this.onClose();
+  }
 
   ngOnInit(): void {
     this.authService.isAdmin$.subscribe(isAdmin => {
