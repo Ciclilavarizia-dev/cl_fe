@@ -10,7 +10,7 @@ import { MobileNavbar } from "../mobile-navbar/mobile-navbar";
 
 @Component({
   selector: 'app-navbar',
-  imports: [MainCategoriesBar, RouterLink, CommonModule, SearchBar, CartBadgeComponent, MobileNavbar],
+  imports: [MainCategoriesBar, RouterLink, CommonModule, SearchBar, CartBadgeComponent],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
@@ -38,6 +38,7 @@ export class Navbar {
   constructor(private router: Router, public authService: AuthService, private alertService: AlertService) { }
 
   ngAfterViewInit() {
+    this.navbarHeight = this.navbar.nativeElement.offsetHeight;
     const hieght = this.navbar.nativeElement.offsetHeight;
     document.documentElement.style.setProperty('--navbar-height', `${hieght}px`)
   }
